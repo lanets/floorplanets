@@ -1,3 +1,5 @@
 import { sayHello } from './greet';
 
-console.log(sayHello("John"));
+// Write a greeting in the element
+const element = document.getElementById('greeting');
+element.innerHTML = sayHello("Django seats");
