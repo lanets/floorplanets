@@ -6,11 +6,6 @@ New floorplan for lanets.ca
 
 Make sure you have [node](https://nodejs.org/en/download/) installed on your machine.
 
-Then install the required packages
-```
-$ make node_modules
-```
-
 ## Building
 
 To compile and build the TypeScript code, run this gulp task:
