@@ -25,13 +25,12 @@ function build() {
     .pipe(gulp.dest(DIST_DIR));
 }
 
-// Recompile TypeScript on file change.
+// Watch the source code and recompile on modifications
+var watchedBrowserify = watchify(compile());
+watchedBrowserify.on("update", watch);
+
 function watch() {
-  var task = watchify(compile());
-
-  task.on('update', build);
-
-  return task
+  return watchedBrowserify
     .bundle()
     .pipe(vinyl(JS_OUTPUT))
     .pipe(gulp.dest(DIST_DIR));
