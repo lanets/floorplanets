@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/lanets/floorplan-2.git"
   },
-  "author": "",
+  "author": "lanets",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/lanets/floorplan-2/issues"
