@@ -4,7 +4,7 @@ New floorplan for lanets.ca
 
 ## Installing dev environment
 
-Make sure you have [node](https://nodejs.org/en/download/) installed on your machine.
+Make sure you have [node](https://nodejs.org/en/download/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
 
 ## Building
 
