@@ -5,7 +5,7 @@ var tsify = require('tsify');
 var watchify = require('watchify');
 
 const JS_OUTPUT = 'bundle.js';
-const DIST_DIR = 'dist';
+const DIST_DIR = './dist';
 
 function compile() {
   return browserify({
