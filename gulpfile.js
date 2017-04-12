@@ -3,6 +3,7 @@ var browserify = require('browserify');
 var vinyl = require('vinyl-source-stream');
 var tsify = require('tsify');
 var watchify = require('watchify');
+var gutil = require('gulp-util');
 
 const JS_OUTPUT = 'bundle.js';
 const DIST_DIR = './dist';
@@ -28,6 +29,7 @@ function build() {
 // Watch the source code and recompile on modifications
 var watchedBrowserify = watchify(compile());
 watchedBrowserify.on("update", watch);
+watchedBrowserify.on("log", gutil.log);
 
 function watch() {
   return watchedBrowserify
