@@ -1,0 +1,29 @@
+{
+  "name": "floorplan-2",
+  "version": "0.0.1",
+  "description": "New floorplan for lanets.ca",
+  "main": "./dist/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanets/floorplan-2.git"
+  },
+  "author": "lanets",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/lanets/floorplan-2/issues"
+  },
+  "homepage": "https://github.com/lanets/floorplan-2#readme",
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.1.6",
+    "gulp-util": "^3.0.8",
+    "tsify": "^3.0.1",
+    "typescript": "^2.2.2",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  }
+}
