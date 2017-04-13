@@ -11,3 +11,7 @@ build: node_modules
 .PHONY: gulp
 gulp: node_modules
 	node_modules/gulp/bin/gulp.js
+
+.PHONY: test
+test: node_modules
+	npm test

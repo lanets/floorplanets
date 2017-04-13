@@ -18,3 +18,12 @@ every time you change a file. Just start gulp in the background using :
 ```
 $ make gulp
 ```
+
+
+## Running the tests
+
+We use [Jasmine](https://jasmine.github.io/) for our unit tests library.
+To run the tests, run:
+```
+$ make test
+```
