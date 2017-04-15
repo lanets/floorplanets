@@ -1,5 +1,5 @@
 # floorplan-2
-New floorplan for lanets.ca
+New floorplan for lanets.ca [![Build Status](https://travis-ci.org/lanets/floorplan-2.svg?branch=master)](https://travis-ci.org/lanets/floorplan-2)
 
 
 ## Installing dev environment
