@@ -15,3 +15,8 @@ gulp: node_modules
 .PHONY: test
 test: node_modules
 	npm test
+
+.PHONY: clean
+clean:
+	rm -rf node_modules
+	rm -f npm-debug.log

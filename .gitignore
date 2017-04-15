@@ -60,3 +60,4 @@ internal/
 !tests/baselines/reference/project/nodeModules*/**/*
 .idea
 yarn.lock
+npm-debug.log
