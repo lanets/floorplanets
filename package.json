@@ -19,7 +19,9 @@
   "devDependencies": {
     "@types/jasmine": "^2.5.47",
     "browserify": "^14.3.0",
+    "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
     "gulp-typescript": "^3.1.6",
     "gulp-util": "^3.0.8",
     "jasmine": "^2.5.3",

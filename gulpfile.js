@@ -1,42 +1,77 @@
-var gulp = require('gulp');
-var browserify = require('browserify');
-var vinyl = require('vinyl-source-stream');
-var tsify = require('tsify');
-var watchify = require('watchify');
-var gutil = require('gulp-util');
+var gulp        = require('gulp'),
+    browserify  = require('browserify'),
+    vinyl       = require('vinyl-source-stream'),
+    tsify       = require('tsify'),
+    watchify    = require('watchify'),
+    gutil       = require('gulp-util'),
+    es          = require('event-stream'),
+    rename      = require('gulp-rename');
 
-const JS_OUTPUT = 'bundle.js';
-const DIST_DIR = './dist';
 
-function compile() {
-  return browserify({
-    basedir: '.',
-    debug: true,
-    entries: ['src/main.ts'],
-    cache: {},
-    packageCache: {},
-  }).plugin(tsify);
+// path of the applications entry points
+const APPS = [
+    './src/main.ts',
+];
+
+
+// Build the project
+gulp.task('build', () => {
+
+    // Create a stream for each application entry point
+    const streams = APPS.map((app) => {
+
+        gutil.log('Begin build for', app);
+
+        const bundler = browserify({
+            debug: true,
+            entries: [app],
+            cache: {},
+            packageCache: {},
+        }).plugin(tsify);
+
+        const filename = app.replace(/^.*[\\\/]/, '');
+        return wrapBundler(bundler, filename);
+    });
+
+    return es.merge(streams);
+});
+
+// Watch the source code for modifications, recompile the application on change.
+gulp.task('default', () => {
+
+    const streams = APPS.map((app) => {
+
+        let bundler = browserify({
+            debug: true,
+            entries: [app],
+            cache: {},
+            packageCache: {},
+        }).plugin(tsify);
+
+        bundler = watchify(bundler);
+
+        const filename = app.replace(/^.*[\\\/]/, '');
+        watchfn = getBundlerHandler(bundler, filename);
+        bundler.on('update', watchfn);
+        bundler.on('log', gutil.log);
+
+        return watchfn(); // Compile the bundler
+    });
+
+    return es.merge(streams);
+});
+
+function wrapBundler(bundler, filename) {
+    return bundler
+        .bundle()
+        .pipe(vinyl(filename))
+        .pipe(rename({ extname: '.bundle.js' }))
+        .pipe(gulp.dest('./dist'));
 }
 
-// Compile TypeScript and bundle everything in a single bundle.js file.
-function build() {
-  return compile()
-    .bundle()
-    .pipe(vinyl(JS_OUTPUT))
-    .pipe(gulp.dest(DIST_DIR));
+function getBundlerHandler(bundler, filename) {
+  return () => {
+    gutil.log('Begin build for', filename);
+    return wrapBundler(bundler, filename);
+  }
 }
-
-// Watch the source code and recompile on modifications
-var watchedBrowserify = watchify(compile());
-watchedBrowserify.on("update", watch);
-watchedBrowserify.on("log", gutil.log);
-
-function watch() {
-  return watchedBrowserify
-    .bundle()
-    .pipe(vinyl(JS_OUTPUT))
-    .pipe(gulp.dest(DIST_DIR));
-}
-
-gulp.task('default', watch);
-gulp.task('build', build);
