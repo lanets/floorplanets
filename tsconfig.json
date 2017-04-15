@@ -4,10 +4,9 @@
         "target": "es5"
     },
     "include": [
-            "src/**/*"
-        ],
-        "exclude": [
-            "node_modules",
-            "**/*.spec.ts"
-        ]
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
