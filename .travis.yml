@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+    - "7"
+
+sudo: false
+
+install:
+    - make clean
+    - make node_modules
+
+script:
+    - make test
+
+notifications:
+    email: false
