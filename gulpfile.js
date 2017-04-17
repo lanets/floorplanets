@@ -1,3 +1,5 @@
+'use strict'
+
 var gulp        = require('gulp'),
     browserify  = require('browserify'),
     vinyl       = require('vinyl-source-stream'),
