@@ -53,7 +53,7 @@ gulp.task('default', () => {
         bundler = watchify(bundler);
 
         const filename = app.replace(/^.*[\\\/]/, '');
-        watchfn = getBundlerHandler(bundler, filename);
+        const watchfn = getBundlerHandler(bundler, filename);
         bundler.on('update', watchfn);
         bundler.on('log', gutil.log);
 
