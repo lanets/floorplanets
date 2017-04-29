@@ -1,3 +1,5 @@
+sudo: required
+
 language: node_js
 
 node_js:
@@ -14,3 +16,6 @@ script:
 
 notifications:
     email: false
+
+services:
+  - docker
