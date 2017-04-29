@@ -1,4 +1,5 @@
 dist/*
+floorplan-api
 
 node_modules/
 built/*
