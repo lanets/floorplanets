@@ -1,11 +1,5 @@
-sudo: required
-
-language: node_js
-
-node_js:
-    - "7"
-
-sudo: false
+services:
+  - docker
 
 install:
     - make clean
@@ -16,6 +10,3 @@ script:
 
 notifications:
     email: false
-
-services:
-  - docker
