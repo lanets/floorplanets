@@ -16,7 +16,7 @@ test: node_modules
 
 .PHONY: test-CI
 test-CI: node_modules
-	$(docker_run_cmd) -e CI=true node npm test
+	$(docker_run_cmd) -e CI=true node npm test && npm run flow
 
 .PHONY: clean
 clean:
