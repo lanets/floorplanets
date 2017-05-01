@@ -1,0 +1,8 @@
+FROM node:latest
+
+ARG userid
+
+RUN apt-get update -qy && \
+    apt-get install -y \
+        libelf-dev \
+        ocaml
