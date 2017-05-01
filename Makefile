@@ -9,7 +9,7 @@ node_modules:
 
 .PHONY: build
 build: node_modules
-	$(docker_run_node) npm build
+	$(docker_run_node) npm run build
 
 .PHONY: test
 test: node_modules
