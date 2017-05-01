@@ -9,4 +9,6 @@ RUN apt-get update && \
         nodejs \
         npm \
         libelf1 \
+        ocaml  \
+        libelf-dev \
         nodejs-legacy
