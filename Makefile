@@ -24,7 +24,7 @@ nodetest: node_modules
 
 .PHONY: nodetest-CI
 nodetest-CI: node_modules
-	$(docker_run_node) -e CI=true node npm test && npm run flow
+	$(docker_run_node) -e CI=true node bash -c "npm test && npm run flow"
 
 #####################
 ## BACKEND TARGETS ##
