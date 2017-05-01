@@ -3,6 +3,10 @@
 # dependencies
 /node_modules
 
+# make targets
+.node-build-image
+.golang-build-image
+
 # testing
 /coverage
 

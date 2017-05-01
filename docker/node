@@ -1,0 +1,12 @@
+FROM ubuntu:17.04
+
+ARG userid
+
+RUN useradd --create-home -u "$userid" USERNAME
+
+RUN apt-get update && \
+    apt-get install -y \
+        nodejs \
+        npm \
+        libelf1 \
+        nodejs-legacy
