@@ -1,8 +1,8 @@
 /* @flow */
 import type { Action } from './types';
-import type { SeatData } from '../types';
+import type { SeatsMap } from '../reducers/types';
 
 
-export function loadSeats(seats: { [id: string]: SeatData }): Action {
+export function loadSeats(seats: SeatsMap ): Action {
   return { type: 'LOAD_SEATS', seats };
 }
