@@ -28,7 +28,7 @@ nodetest: node_modules .node-build-image
 
 .PHONY: nodetest-CI .node-build-image
 nodetest-CI: node_modules
-	$(docker_run_node) -e CI=true node bash -c "npm test && npm run flow"
+	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow"
 
 #####################
 ## BACKEND TARGETS ##
