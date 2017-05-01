@@ -7,43 +7,47 @@ docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorpla
 ## FRONT-END TARGETS ##
 #######################
 
+.node-build-image:
+	docker build --build-arg userid=$$(id -u) -f docker/node -t floorplan-node docker
+	touch .node-build-image
+
 .PHONY: nodebuild
-nodebuild: node_modules
-	$(docker_run_node) node npm run build
+nodebuild: node_modules .node-build-image
+	$(docker_run_node) floorplan-node npm run build
 
 .PHONY: reactapp
-reactapp: node_modules
-	$(docker_run_node) -p 3000:3000 node npm start
+reactapp: node_modules .node-build-image
+	$(docker_run_node) -p 3000:3000 floorplan-node npm start
 
-node_modules:
-	$(docker_run_node) node npm install
+node_modules: .node-build-image
+	$(docker_run_node) floorplan-node npm install
 
 .PHONY: nodetest
-nodetest: node_modules
-	$(docker_run_node) node npm test
+nodetest: node_modules .node-build-image
+	$(docker_run_node) floorplan-node npm test
 
-.PHONY: nodetest-CI
+.PHONY: nodetest-CI .node-build-image
 nodetest-CI: node_modules
-	$(docker_run_node) -e CI=true node npm test && npm run flow
+	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow"
 
 #####################
 ## BACKEND TARGETS ##
 #####################
 
-.PHONY: golang-build-image
-golang-build-image:
+.golang-build-image:
 	docker build --build-arg userid=$$(id -u) -f docker/golang -t floorplan-golang docker
+	touch .golang-build-image
 
 .PHONY: gobuild
-gobuild: golang-build-image
+gobuild: .golang-build-image
 	$(docker_run_go) go build ./...
 
 .PHONY: gofmt
-gofmt: golang-build-image
+gofmt: .golang-build-image
 	$(docker_run_go) go fmt ./...
 
 .PHONY: gotest
-gotest: golang-build-image
+gotest: .golang-build-image
 	$(docker_run_go) bash -c "go get -v -t ./... && go test ./..."
 
 
@@ -62,3 +66,5 @@ clean:
 	rm -rf node_modules
 	rm -f npm-debug.log
 	rm -f floorplan-api
+	rm -f .node-build-image
+	rm -f .golang-build-image
