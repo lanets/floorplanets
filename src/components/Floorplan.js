@@ -2,10 +2,17 @@
 import React from 'react';
 import paper from 'paper';
 
+import type { SeatsMap } from '../reducers/types';
+
 import Seat from './Seat';
 
+type Props = {
+  seats: SeatsMap,
+}
 
 export default class Floorplan extends React.Component {
+
+  props: Props;
 
   componentDidMount() {
     // 4:3 ratio
@@ -16,9 +23,13 @@ export default class Floorplan extends React.Component {
 
     // Simple, hardcoded, seat rendering.
     const seats: Seat[] = [];
-    seats.push(new Seat(60, 60, 'G-13'));
-    seats.push(new Seat(150, 60, 'G-14'));
-    seats.push(new Seat(240, 60, 'G-15'));
+
+    // Render the seats based on the loaded data.
+    for (const id in this.props.seats) {
+      const seatdata = this.props.seats[parseInt(id)]; //TODO: parseInt is ugly af
+      const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
+      seats.push(seat);
+    }
 
     console.log('Floorplan initialized.');
   }
