@@ -9,5 +9,4 @@ export type SeatData = {
   x: number,
   y: number,
   label: string,  // what's written on the seat
-  available: bool,  // whether this seat is available or not
 };
