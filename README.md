@@ -21,6 +21,12 @@ $ make
 Dev mode runs the application with a watcher, reloading the app on source code change.
 
 
+To build the application for production, run:
+```
+$ make build
+```
+
+
 ## Running the tests
 
 To run the tests, run:
