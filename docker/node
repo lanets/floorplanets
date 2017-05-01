@@ -1,14 +1,8 @@
-FROM ubuntu:17.04
+FROM node:latest
 
 ARG userid
 
-RUN useradd --create-home -u "$userid" USERNAME
-
-RUN apt-get update && \
+RUN apt-get update -qy && \
     apt-get install -y \
-        nodejs \
-        npm \
-        libelf1 \
-        ocaml  \
         libelf-dev \
-        nodejs-legacy
+        ocaml
