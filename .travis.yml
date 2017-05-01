@@ -6,7 +6,7 @@ install:
     - make node_modules
 
 script:
-    - make -j1 test
+    - make test
 
 notifications:
     email: false

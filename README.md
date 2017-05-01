@@ -7,23 +7,30 @@ New floorplan for lanets.ca
 
 Make sure you have [docker](https://www.docker.com/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
 
+To install node dependencies, run :
+```
+$ make node_modules
+```
+
 ## Building
 
-To compile and build the TypeScript code, run this gulp task:
+To start the application in dev mode, run:
 ```
-$ make build
+$ make
 ```
 
-While developping, you can ask gulp to recompile the project
-every time you change a file. Just start gulp in the background using :
+The application should be running at : [localhost:3000](http://localhost:3000)
+Dev mode runs the application with a watcher, reloading the app on source code change.
+
+
+To build the application for production, run:
 ```
-$ make gulp
+$ make build
 ```
 
 
 ## Running the tests
 
-We use [Jasmine](https://jasmine.github.io/) for our unit tests library.
 To run the tests, run:
 ```
 $ make test
