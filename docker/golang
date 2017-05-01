@@ -1,0 +1,8 @@
+FROM golang:1.8
+
+ARG userid
+
+RUN useradd -u "$userid" USERNAME
+
+RUN mkdir /go/src/github.com
+RUN chmod 777 /go/src/github.com
