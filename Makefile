@@ -1,6 +1,6 @@
 all: gofmt reactapp
 
-docker_run_node = docker run --rm -t -i -p 3000:3000 -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
+docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
 docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorplan-2 -w /go/src/github.com/lanets/floorplan-2 -u $$(id -u):$$(id -g) floorplan-golang
 
 #######################
@@ -17,7 +17,7 @@ nodebuild: node_modules .node-build-image
 
 .PHONY: reactapp
 reactapp: node_modules .node-build-image
-	$(docker_run_node) floorplan-node npm start
+	$(docker_run_node) -p 3000:3000 floorplan-node npm start
 
 node_modules: .node-build-image
 	$(docker_run_node) floorplan-node npm install
