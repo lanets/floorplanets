@@ -18,6 +18,8 @@ To start the application in dev mode, run:
 ```
 $ make
 ```
+
+The application should be running at : [localhost:3000](http://localhost:3000)
 Dev mode runs the application with a watcher, reloading the app on source code change.
 
 
