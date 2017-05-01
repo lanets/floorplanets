@@ -1,0 +1,28 @@
+/* @flow */
+
+/**
+ *  FlatUI colors:
+ *  https://flatuicolors.com/
+ */
+export const FLAT_COLORS = {
+  TURQUOISE: '#1ABC9C',
+  GREENSEA: '#16A085',
+  EMERLAND: '#2ECC71',
+  NEPHRITIS: '#27AE60',
+  PETERRIVER: '#3498DB',
+  BELIZEHOLE: '#2980B9',
+  AMETHYST: '#9B59B6',
+  WISTERIA: '#8E44AD',
+  WETASPHALT: '#34495E',
+  MIDNIGHTBLUE: '#2C3E50',
+  SUNFLOWER: '#F1C40F',
+  ORANGE: '#F39C12',
+  CARROT: '#E67E22',
+  PUMPKIN: '#D35400',
+  ALIZARIN: '#E74C3C',
+  POMEGRANATE: '#C0392B',
+  CLOUDS: '#ECF0F1',
+  SILVER: '#BDC3C7',
+  CONCRETE: '#95A5A6',
+  ASBESTOS: '#7F8C8D',
+};
