@@ -2,7 +2,6 @@
 
 import type { Action } from '../actions/types';
 import type { Seats } from './types';
-import type { SeatData } from '../types';
 
 export const initial: Seats = {
   seats: {},

@@ -26,7 +26,7 @@ export default class Floorplan extends React.Component {
 
     // Render the seats based on the loaded data.
     for (const id in this.props.seats) {
-      const seatdata = this.props.seats[parseInt(id)]; //TODO: parseInt is ugly af
+      const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
       seats.push(seat);
     }
