@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/lanets/floorplan-2/issues"
   },
-  "homepage": "https://github.com/lanets/floorplan-2#readme",
+  "homepage": "https://lanets.ca/",
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
