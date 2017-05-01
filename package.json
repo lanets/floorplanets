@@ -1,0 +1,28 @@
+{
+  "name": "floorplan-2",
+  "version": "0.0.1",
+  "description": "New floorplan for lanets.ca",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanets/floorplan-2.git"
+  },
+  "author": "lanets",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/lanets/floorplan-2/issues"
+  },
+  "homepage": "https://github.com/lanets/floorplan-2#readme",
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
