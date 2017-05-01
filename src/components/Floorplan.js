@@ -21,7 +21,6 @@ export default class Floorplan extends React.Component {
 
     paper.setup(this.refs.canvas);
 
-    // Simple, hardcoded, seat rendering.
     const seats: Seat[] = [];
 
     // Render the seats based on the loaded data.
