@@ -1,7 +1,7 @@
-docker_run_cmd = docker run --rm -t -i -p 3000:3000 -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
+docker_run_cmd = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
 
 all:
-	$(docker_run_cmd) node npm start
+	$(docker_run_cmd) -p 3000:3000 node npm start
 
 node_modules:
 	$(docker_run_cmd) node npm install
