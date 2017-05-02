@@ -15,8 +15,11 @@ docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorpla
 nodebuild: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm run build
 
+flow-typed: node_modules .node-build-image
+	$(docker_run_node) floorplan-node npm run flowtyped
+
 .PHONY: reactapp
-reactapp: node_modules .node-build-image
+reactapp: node_modules flow-typed .node-build-image
 	$(docker_run_node) -p 3000:3000 floorplan-node npm start
 
 node_modules: .node-build-image
@@ -26,9 +29,9 @@ node_modules: .node-build-image
 nodetest: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm test
 
-.PHONY: nodetest-CI .node-build-image
-nodetest-CI: node_modules
-	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow"
+.PHONY: nodetest-CI flow-typed .node-build-image
+nodetest-CI: node_modules flow-typed
+	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow && ./node_modules/eslint/bin/eslint.js src"
 
 #####################
 ## BACKEND TARGETS ##
