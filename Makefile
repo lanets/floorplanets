@@ -28,7 +28,7 @@ nodetest: node_modules .node-build-image
 
 .PHONY: nodetest-CI
 nodetest-CI: node_modules .node-build-image
-	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow"
+	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow && ./node_modules/eslint/bin/eslint.js src"
 
 #####################
 ## BACKEND TARGETS ##
