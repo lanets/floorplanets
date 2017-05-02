@@ -1,3 +1,4 @@
+.PHONY: all
 all: gofmt reactapp
 
 docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
