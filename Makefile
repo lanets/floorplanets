@@ -26,7 +26,7 @@ node_modules: .node-build-image
 	$(docker_run_node) floorplan-node npm install
 
 .PHONY: nodetest
-nodetest: node_modules flow-typed .node-build-image
+nodetest: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm test
 
 .PHONY: nodetest-CI flow-typed .node-build-image
