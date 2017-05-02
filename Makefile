@@ -1,3 +1,4 @@
+.PHONY: all
 all: gofmt reactapp
 
 docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
@@ -26,8 +27,8 @@ node_modules: .node-build-image
 nodetest: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm test
 
-.PHONY: nodetest-CI .node-build-image
-nodetest-CI: node_modules
+.PHONY: nodetest-CI
+nodetest-CI: node_modules .node-build-image
 	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow && ./node_modules/eslint/bin/eslint.js src"
 
 #####################
