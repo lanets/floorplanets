@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import {Point, Path, Group, PointText} from 'paper';
 
 import { FLAT_COLORS } from '../colors';

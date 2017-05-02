@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Floorplan from './containers/Floorplan';
 
+
 const Wrapper = styled.div`
   text-align: center;
 `;

@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/flow-typed
 
 # make targets
 .node-build-image
