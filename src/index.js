@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 
-import App from './App';
+import Floorplan from './containers/Floorplan';
 import reducers from './reducers';
 
 import { seatsData } from './__mock__/seats';
@@ -24,9 +24,10 @@ let store = createStore(
 // source: (file, localstorage, server, etc.) .
 store.dispatch(loadSeats(seatsData));
 
+// Inject the floorplan app in the host HTML page.
 render(
   <Provider store={store}>
-    <App />
+    <Floorplan />
   </Provider>,
   document.getElementById('root')
 );
