@@ -30,9 +30,17 @@ node_modules: .node-build-image
 nodetest: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm test
 
+.PHONY: eslint
+eslint: node_modules .node-build-image
+	$(docker_run_node) floorplan-node ./node_modules/eslint/bin/eslint.js src
+
+.PHONY: flow
+flow: node_modules .node-build-image flow-typed
+	$(docker_run_node) -e CI=true floorplan-node npm run flow
+
 .PHONY: nodetest-CI
-nodetest-CI: node_modules flow-typed .node-build-image
-	$(docker_run_node) -e CI=true floorplan-node bash -c "npm test && npm run flow && ./node_modules/eslint/bin/eslint.js src"
+nodetest-CI: node_modules .node-build-image eslint flow
+	$(docker_run_node) -e CI=true floorplan-node npm test
 
 #####################
 ## BACKEND TARGETS ##
