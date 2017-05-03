@@ -28,12 +28,13 @@ export default class Seat {
       fillColor: FLAT_COLORS.ALIZARIN,
     });
 
+    const fontSize = 12;
     this.text = new PointText({
-      position: new Point(this.position.x, this.position.y + 12 * 0.5),
+      position: new Point(this.position.x, this.position.y + fontSize * 0.5),
       content: label,
       fillColor: 'black',
       fontFamily: 'Helvetica',
-      fontSize: 12,
+      fontSize,
       justification: 'center',
     });
 
