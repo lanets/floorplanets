@@ -16,6 +16,7 @@ docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorpla
 nodebuild: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm run build
 
+.PHONY: flow-typed
 flow-typed: node_modules .node-build-image
 	$(docker_run_node) floorplan-node npm run flowtyped
 
