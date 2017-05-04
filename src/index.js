@@ -20,6 +20,9 @@ export class FloorplanClient {
 
   constructor(config: FloorplanConfig) {
     this.config = config;
+
+    if (!config.div)
+      throw new Error("'div' field missing in Floorplan configuration.");
   }
 
   init() {
