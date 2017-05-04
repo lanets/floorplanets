@@ -14,7 +14,7 @@ import { seatsData } from './__mock__/seats';
 import { loadSeats } from './actions/seats';
 
 
-class FloorplanClient {
+export class FloorplanClient {
 
   config: FloorplanConfig;
 
