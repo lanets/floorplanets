@@ -7,8 +7,8 @@
  */
 export type FloorplanConfig = {
 
-  // The id of the div on your page in which you want to display
-  // the floorplan.
+  // The id of the div on the HTML page in which the floorplan is going to
+  // be displayed.
   div: string,
 };
 
