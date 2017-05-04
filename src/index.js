@@ -48,4 +48,7 @@ export class FloorplanClient {
   }
 }
 
-global.floorplan = FloorplanClient;
+
+global.floorplanets = {
+  Floorplan: FloorplanClient,
+};
