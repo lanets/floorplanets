@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 
+import type { FloorplanConfig } from './types';
+
 import Floorplan from './containers/Floorplan';
 import reducers from './reducers';
 
@@ -14,8 +16,14 @@ import { loadSeats } from './actions/seats';
 
 class FloorplanClient {
 
+  config: FloorplanConfig;
+
+  constructor(config: FloorplanConfig) {
+    this.config = config;
+  }
+
   init() {
-    let store = createStore(
+    const store = createStore(
       reducers,
       // chrome redux dev tool binding
       // https://github.com/zalmoxisus/redux-devtools-extension#11-basic-store
@@ -27,15 +35,14 @@ class FloorplanClient {
     // source: (file, localstorage, server, etc.) .
     store.dispatch(loadSeats(seatsData));
 
-    // Inject the floorplan app in the host HTML page.
+    // Inject floorplan in the div of the HTML host.
     render(
       <Provider store={store}>
-      <Floorplan />
+          <Floorplan />
       </Provider>,
-      document.getElementById('root')
+      document.getElementById(this.config.div)
     );
   }
 }
 
-global.floorplan = new FloorplanClient();
-
+global.floorplan = FloorplanClient;
