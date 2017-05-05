@@ -27,6 +27,12 @@ export default class Floorplan extends React.Component {
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
+
+      // TODO: replace function via a props received and defined in the FloorplanClient.
+      seat.onSelectSeat = (label: string) => {
+        console.log('inside Floorplan component now...');
+      }
+
       seats.push(seat);
     }
 
