@@ -40,7 +40,9 @@ export class FloorplanClient {
     // Inject floorplan in the div of the HTML host.
     render(
       <Provider store={store}>
-          <Floorplan />
+          <Floorplan
+            onObjectSelected={this.config.onObjectSelected}
+          />
       </Provider>,
       document.getElementById(this.config.div)
     );

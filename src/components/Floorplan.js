@@ -8,6 +8,8 @@ import Seat from './Seat';
 
 type Props = {
   seats: SeatsMap,
+
+  onObjectSelected: (obj: Object) => void,
 }
 
 export default class Floorplan extends React.Component {
@@ -28,9 +30,10 @@ export default class Floorplan extends React.Component {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
 
-      // TODO: replace function via a props received and defined in the FloorplanClient.
+      // TODO: This should be defined elsewhere
+      // TODO: The seat data object should be queried instead of keeping a ref.
       seat.onSelectSeat = (label: string) => {
-        console.log('inside Floorplan component now...');
+        this.props.onObjectSelected(seatdata);
       }
 
       seats.push(seat);

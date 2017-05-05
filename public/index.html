@@ -43,6 +43,11 @@
      */
     const floorplan = new floorplanets.Floorplan({
       div: 'root',
+
+      onObjectSelected: (object) => {
+        console.log('this is defined inside index.html');
+        console.log(object);
+      },
     });
 
     floorplan.init();
