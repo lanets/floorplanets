@@ -1,13 +1,13 @@
 /* @flow */
-import type { SeatData } from '../types';
+import type { SeatState } from '../types';
 
 
 /**
  *  Hashmap of seats.
  *  key: id of the seat
- *  value: SeatData object
+ *  value: SeatState object
  */
-export type SeatsMap = {[id: string]: SeatData};
+export type SeatsMap = {[id: string]: SeatState};
 
 /**
  *  Structure of the Seats store.
