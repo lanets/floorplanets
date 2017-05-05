@@ -4,7 +4,7 @@
  * The data binding between the state of a seat and the graphic
  * representation of a seat.
  */
-export type SeatData = {
+export type SeatState = {
   id: number,
   x: number,
   y: number,
