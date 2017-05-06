@@ -15,3 +15,9 @@ export type FloorplanConfig = {
   onObjectSelected: (obj: Object) => void;
 };
 
+/**
+ *  Structure shown to the client to describe a seat object.
+ */
+export type SeatData = {
+  label: string,
+};

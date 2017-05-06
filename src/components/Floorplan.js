@@ -4,6 +4,7 @@ import paper from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
 
+import { toSeatData } from '../conversions';
 import Seat from './Seat';
 
 
@@ -39,8 +40,7 @@ export default class Floorplan extends React.Component {
 
   handleSelectSeat(id: string) {
     const seatState = this.props.seats[id];
-    //TODO: Transform seatState into a SeatData.
-    this.props.onObjectSelected(seatState);
+    this.props.onObjectSelected(toSeatData(seatState));
   }
 
   render() {
