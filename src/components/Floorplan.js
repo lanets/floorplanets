@@ -6,6 +6,7 @@ import type { SeatsMap } from '../reducers/types';
 
 import Seat from './Seat';
 
+
 type Props = {
   seats: SeatsMap,
 
@@ -23,23 +24,23 @@ export default class Floorplan extends React.Component {
 
     paper.setup(this.refs.canvas);
 
-    const seats: Seat[] = [];
+    this.generateSeats();
+  }
 
+  generateSeats() {
     // Render the seats based on the loaded data.
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
 
-      // TODO: This should be defined elsewhere
-      // TODO: The seat data object should be queried instead of keeping a ref.
-      seat.onSelectSeat = (label: string) => {
-        this.props.onObjectSelected(seatdata);
-      }
-
-      seats.push(seat);
+      seat.onSelect = () => this.handleSelectSeat(id);
     }
+  }
 
-    console.log('Floorplan initialized.');
+  handleSelectSeat(id: string) {
+    const seatState = this.props.seats[id];
+    //TODO: Transform seatState into a SeatData.
+    this.props.onObjectSelected(seatState);
   }
 
   render() {

@@ -11,7 +11,7 @@ export default class Seat {
   shape: Path;
   text: PointText;
 
-  onSelectSeat: (label: string) => void;
+  onSelect: () => void;
 
   constructor(x: number, y: number, label: string) {
     this.position = new Point(x, y);
@@ -50,6 +50,6 @@ export default class Seat {
     });
 
     // event handlers
-    this.item.onClick = () => this.onSelectSeat(label);
+    this.item.onClick = () => this.onSelect();
   }
 }
