@@ -41,7 +41,7 @@ export class FloorplanClient {
     render(
       <Provider store={store}>
           <Floorplan
-            onSeatSelected={this.config.onSeatSelected}
+            onSelectSeat={this.config.onSelectSeat}
           />
       </Provider>,
       document.getElementById(this.config.div)

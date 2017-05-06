@@ -19,6 +19,6 @@ export type FloorplanConfig = {
   div: string,
 
   // Fired when the user selects a seat.
-  onSeatSelected: (seat: SeatData) => void;
+  onSelectSeat: (seat: SeatData) => void;
 };
 
