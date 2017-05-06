@@ -3,6 +3,7 @@ import React from 'react';
 import paper from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
+import type { SeatData } from '../types';
 
 import { toSeatData } from '../conversions';
 import Seat from './Seat';
@@ -11,7 +12,7 @@ import Seat from './Seat';
 type Props = {
   seats: SeatsMap,
 
-  onObjectSelected: (obj: Object) => void,
+  onSeatSelected: (seat: SeatData) => void,
 }
 
 export default class Floorplan extends React.Component {
@@ -42,7 +43,7 @@ export default class Floorplan extends React.Component {
 
   handleSelectSeat(id: string) {
     const seatState = this.props.seats[id];
-    this.props.onObjectSelected(toSeatData(seatState));
+    this.props.onSeatSelected(toSeatData(seatState));
   }
 
   render() {
