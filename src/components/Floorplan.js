@@ -28,8 +28,10 @@ export default class Floorplan extends React.Component {
     this.generateSeats();
   }
 
+  /**
+   *  Render seats on the floorplan based off of the Store.
+   */
   generateSeats() {
-    // Render the seats based on the loaded data.
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
