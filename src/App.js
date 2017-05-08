@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Floorplan from './components/Floorplan';
+
 
 const Wrapper = styled.div`
   text-align: center;
@@ -21,6 +23,7 @@ class App extends Component {
         <Header>
           <h2>Floorplan</h2>
         </Header>
+        <Floorplan />
       </Wrapper>
     );
   }
