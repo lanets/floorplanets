@@ -24,10 +24,12 @@ export default class Floorplan extends React.Component {
   }
 
   componentDidMount() {
-    // 4:3 ratio
-    this.refs.canvas.width = 960;
-    this.refs.canvas.height = 540;
-    paper.setup(this.refs.canvas);
+    const canvas = this.refs.canvas;
+
+    // Setup canvas
+    canvas.width = 960;
+    canvas.height = 540;
+    paper.setup(canvas);
 
     // view bindings
     this.view = paper.view;
