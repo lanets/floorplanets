@@ -16,19 +16,6 @@ export default class Floorplan extends React.Component {
   props: Props;
   view: paper.view;
 
-  translateCamera(event: Object) {
-    const delta = event.delta;
-
-    // smoothen transition
-    delta.length /= 2;
-
-    // inverts the scroll from the drag direction
-    this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
-
-    event.preventDefault()
-    this.view.draw();
-  }
-
   componentDidMount() {
     const canvas = this.refs.canvas;
 
@@ -50,6 +37,19 @@ export default class Floorplan extends React.Component {
     }
 
     console.log('Floorplan initialized.');
+  }
+
+  translateCamera(event: Object) {
+    const delta = event.delta;
+
+    // smoothen transition
+    delta.length /= 2;
+
+    // inverts the scroll from the drag direction
+    this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
+
+    event.preventDefault()
+    this.view.draw();
   }
 
   render() {
