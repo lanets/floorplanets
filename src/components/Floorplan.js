@@ -1,11 +1,11 @@
 // @flow
 import React from 'react';
-import paper from 'paper';
+import { paper, Point } from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
 
 import Seat from './Seat';
-import { translationCenter } from '../camera';
+
 
 type Props = {
   seats: SeatsMap,
@@ -16,10 +16,16 @@ export default class Floorplan extends React.Component {
   props: Props;
   view: paper.view;
 
-  translate(event: Object) {
-    this.view.center = translationCenter(this.view.center, event.delta);
-    event.preventDefault()
+  translateCamera(event: Object) {
+    const delta = event.delta;
 
+    // smoothen transition
+    delta.length /= 2;
+
+    // inverts the scroll from the drag direction
+    this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
+
+    event.preventDefault()
     this.view.draw();
   }
 
@@ -33,7 +39,7 @@ export default class Floorplan extends React.Component {
 
     // view bindings
     this.view = paper.view;
-    this.view.onMouseDrag = (e) => this.translate(e);
+    this.view.onMouseDrag = (e) => this.translateCamera(e);
 
     // Render the seats based on the loaded data.
     const seats: Seat[] = [];
