@@ -28,6 +28,8 @@ export default class Floorplan extends React.Component {
     this.view = paper.view;
     this.view.onMouseDrag = (e) => this.translateCamera(e);
 
+    this.view.center = new Point(1175, 371);
+
     // Render the seats based on the loaded data.
     const seats: Seat[] = [];
     for (const id in this.props.seats) {

@@ -14,7 +14,7 @@ export default class Seat {
   constructor(x: number, y: number, label: string) {
     this.position = new Point(x, y);
 
-    const radius = 40;
+    const radius = 9;
     const outCircle = Shape.Circle({
       position: this.position,
       radius,
@@ -29,11 +29,11 @@ export default class Seat {
     });
 
     this.text = new PointText({
-      position: new Point(this.position.x, this.position.y + 12 * 0.5),
+      position: new Point(this.position.x, this.position.y + 6 * 0.5),
       content: label,
       fillColor: 'black',
       fontFamily: 'Helvetica',
-      fontSize: 12,
+      fontSize: 6,
       justification: 'center',
     });
 

@@ -9,6 +9,7 @@ import App from './App';
 import reducers from './reducers';
 
 import { seatsData } from './__mock__/seats';
+import { seatsLAN } from './__mock__/lanets2016';
 import { loadSeats } from './actions/seats';
 
 
@@ -22,7 +23,14 @@ let store = createStore(
 
 // Simulating the loading of seats from an external
 // source: (file, localstorage, server, etc.) .
-store.dispatch(loadSeats(seatsData));
+
+const seats = {};
+Object.keys(seatsLAN).forEach((seat) => {
+  seats[seat] = seatsLAN[seat];
+  seats[seat].label = seats[seat].name;
+});
+
+store.dispatch(loadSeats(seats));
 
 render(
   <Provider store={store}>
