@@ -28,14 +28,14 @@ export default class Seat {
       fillColor: FLAT_COLORS.ALIZARIN,
     });
 
-    this.text = new PointText({
-      position: new Point(this.position.x, this.position.y + 6 * 0.5),
-      content: label,
-      fillColor: 'black',
-      fontFamily: 'Helvetica',
-      fontSize: 6,
-      justification: 'center',
-    });
+    // this.text = new PointText({
+      // position: new Point(this.position.x, this.position.y + 6 * 0.5),
+      // content: label,
+      // fillColor: 'black',
+      // fontFamily: 'Helvetica',
+      // fontSize: 6,
+      // justification: 'center',
+    // });
 
 
     this.item = new Group({
@@ -43,7 +43,7 @@ export default class Seat {
       children: [
         outCircle,
         inCircle,
-        this.text,
+        // this.text,
       ],
     });
 
