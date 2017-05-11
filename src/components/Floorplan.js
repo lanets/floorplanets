@@ -49,6 +49,7 @@ export default class Floorplan extends React.Component {
     }
 
     console.log('Floorplan initialized.');
+
     this.update();
   }
 
