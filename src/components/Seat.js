@@ -47,6 +47,6 @@ export default class Seat {
       ],
     });
 
-    this.item.onClick = () => console.log(`Seat ${label} clicked !`);
+    this.item.onClick = () => console.log(this.item);
   }
 }
