@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import Floorplan from './components/Floorplan';
+import Floorplan from './containers/Floorplan';
 
 
 const Wrapper = styled.div`
