@@ -6,7 +6,7 @@
  */
 export type SeatData = {
   label: string,
-  data?: Object,
+  data: Object,
 };
 
 /*

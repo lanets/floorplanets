@@ -12,5 +12,6 @@ import type { SeatState } from './reducers/types';
 export function toSeatData(seatState: SeatState) : SeatData {
   return {
     label: seatState.label,
+    data: seatState.data || {},
   };
 }
