@@ -67,17 +67,13 @@ export default class Floorplan extends React.Component {
 
   update() {
     // hide seats that are not in the view
-    for (let i = 0; i < this.seats.length; i++)
-      this.applyOcclusion(this.seats[i]);
+    this.seats.forEach((seat) => {
+      seat.visible = seat.position.isInside(this.view.bounds);
+    });
 
     this.view.update();
 
     requestAnimationFrame(this.update);
-  }
-
-  applyOcclusion(seat: Seat) {
-    // hide seats that are not in the bounds of the view.
-    seat.visible = seat.position.isInside(this.view.bounds);
   }
 
   render() {
