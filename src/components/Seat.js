@@ -13,7 +13,7 @@ export default class Seat {
 
   visible: boolean;
 
-  constructor(x: number, y: number, label: string) {
+  constructor(x: number, y: number) {
     this.position = new Point(x, y);
 
     const radius = 9;

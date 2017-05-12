@@ -44,7 +44,7 @@ export default class Floorplan extends React.Component {
     this.seats = [];
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
-      const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
+      const seat = new Seat(seatdata.x, seatdata.y);
       this.seats.push(seat);
     }
 
