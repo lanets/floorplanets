@@ -9,7 +9,8 @@ export type SeatState = {
   id: number,
   x: number,
   y: number,
-  label: string,  // what's written on the seat
+  label: string,  // what's written on the seat,
+  data?: Object,
 };
 
 /**
