@@ -21,4 +21,5 @@ export type SeatState = {
   x: number,
   y: number,
   label: string,  // what's written on the seat
+  data?: Object,  // aditionnal data associated with this seat.
 };
