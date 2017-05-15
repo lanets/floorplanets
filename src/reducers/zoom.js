@@ -13,7 +13,7 @@ export default function reducer(state: Zoom = initial, action: Action): Zoom {
       return { ...state, zoom: state.zoom + action.value};
 
     case 'ZOOM_OUT': {
-      const nextZoom = state.zoom - action.value > 0 ? state.zoom - action.value : 0.2;
+      const nextZoom = state.zoom - action.value > 0 ? state.zoom - action.value : state.zoom;
       return { ...state, zoom: nextZoom};
     }
 
