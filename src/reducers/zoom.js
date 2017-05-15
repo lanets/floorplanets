@@ -12,8 +12,10 @@ export default function reducer(state: Zoom = initial, action: Action): Zoom {
     case 'ZOOM_IN':
       return { ...state, zoom: state.zoom + action.value};
 
-    case 'ZOOM_OUT':
-      return { ...state, zoom: state.zoom - action.value};
+    case 'ZOOM_OUT': {
+      const nextZoom = state.zoom - action.value > 0 ? state.zoom - action.value : 0.2;
+      return { ...state, zoom: nextZoom};
+    }
 
     default:
       return state;
