@@ -27,13 +27,21 @@ const ZoomButton = styled.div`
   margin: 0 0 8px 0;
 `;
 
+
+type Props = {
+  zoomIn: (val: number) => void,
+  zoomOut: (val: number) => void,
+}
+
 export default class FloorplanUI extends React.Component {
+
+  props: Props;
 
   render() {
     return (
       <Wrapper>
-        <ZoomButton>+</ZoomButton>
-        <ZoomButton>-</ZoomButton>
+        <ZoomButton onClick={() => this.props.zoomIn(0.5)}>+</ZoomButton>
+        <ZoomButton onClick={() => this.props.zoomOut(0.5)}>-</ZoomButton>
       </Wrapper>
     );
   }

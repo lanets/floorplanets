@@ -10,7 +10,7 @@ import type { FloorplanConfig } from './types';
 
 import reducers from './reducers';
 import Floorplan from './containers/Floorplan';
-import FloorplanUI from './components/FloorplanUI';
+import FloorplanUI from './containers/FloorplanUI';
 import { loadSeats } from './actions/seats';
 
 import { lanETS2016 } from './__mock__/lanets2016';
