@@ -10,8 +10,15 @@ import type { SeatState } from '../types';
 export type SeatsMap = {[id: string]: SeatState};
 
 /**
- *  Structure of the Seats store.
+ *  Structure of the `seats` store.
  */
 export type Seats = {
   seats: SeatsMap,
+};
+
+/**
+ *  Structure of the `zoom` store.
+ */
+export type Zoom = {
+  zoom: number,
 };
