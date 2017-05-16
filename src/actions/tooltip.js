@@ -11,3 +11,7 @@ export function showTooltip(x: number, y:number, text: string): Action {
     text,
   };
 }
+
+export function hideTooltip(): Action {
+  return { type: 'HIDE_TOOLTIP' };
+}

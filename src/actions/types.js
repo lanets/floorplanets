@@ -14,3 +14,4 @@ export type Action =
 
   //  Tooltip actions
 | { type: 'SHOW_TOOLTIP', text: string, x: number, y: number }
+| { type: 'HIDE_TOOLTIP' }

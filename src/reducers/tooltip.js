@@ -22,6 +22,9 @@ export default function reducer(state: Tooltip = initial, action: Action): Toolt
         text: action.text,
       };
 
+    case 'HIDE_TOOLTIP':
+      return { ...state, display: false };
+
     default:
       return state;
   }
