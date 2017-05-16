@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const Wrapper = styled.div`
+const ZoomButtons = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -27,6 +27,19 @@ const ZoomButton = styled.div`
   margin: 0 0 8px 0;
 `;
 
+const Tooltip = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  left: ${props => props.x}px;
+  top: ${props => props.y}px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 4px;
+  opacity: 0.8;
+`;
+
 
 type Props = {
   zoomIn: (val: number) => void,
@@ -39,10 +52,15 @@ export default class FloorplanUI extends React.Component {
 
   render() {
     return (
-      <Wrapper>
-        <ZoomButton onClick={() => this.props.zoomIn(0.5)}>+</ZoomButton>
-        <ZoomButton onClick={() => this.props.zoomOut(0.5)}>-</ZoomButton>
-      </Wrapper>
+      <div>
+        <ZoomButtons>
+          <ZoomButton onClick={() => this.props.zoomIn(0.5)}>+</ZoomButton>
+          <ZoomButton onClick={() => this.props.zoomOut(0.5)}>-</ZoomButton>
+        </ZoomButtons>
+        <Tooltip x={400} y={300}>
+          {"Zergov | C-30"}
+        </Tooltip>
+      </div>
     );
   }
 }
