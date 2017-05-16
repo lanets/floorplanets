@@ -13,4 +13,4 @@ export type Action =
 | { type: 'ZOOM_OUT', value: number }
 
   //  Tooltip actions
-| { type: 'SHOW_TOOLTIP', text: string }
+| { type: 'SHOW_TOOLTIP', text: string, x: number, y: number }

@@ -28,4 +28,6 @@ export type Zoom = {
  */
 export type Tooltip = {
   display: boolean,
+  x: number,
+  y: number,
 };
