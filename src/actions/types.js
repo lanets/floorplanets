@@ -11,3 +11,6 @@ export type Action =
   // Zoom actions
 | { type: 'ZOOM_IN', value: number }
 | { type: 'ZOOM_OUT', value: number }
+
+  //  Tooltip actions
+| { type: 'SHOW_TOOLTIP', text: string }

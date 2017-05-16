@@ -22,3 +22,10 @@ export type Seats = {
 export type Zoom = {
   zoom: number,
 };
+
+/**
+ *  Structure of the `tooltip` store.
+ */
+export type Tooltip = {
+  display: boolean,
+};

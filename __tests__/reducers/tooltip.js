@@ -1,4 +1,5 @@
 import reducer, { initial } from '../../src/reducers/tooltip';
+import { showTooltip } from '../../src/actions/tooltip';
 
 
 describe('reducer handles SHOW_TOOLTIP action', () => {
