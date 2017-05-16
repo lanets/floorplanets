@@ -2,6 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import type { Tooltip } from '../reducers/types';
+
 
 const ZoomButtons = styled.div`
   position: absolute;
@@ -27,7 +29,7 @@ const ZoomButton = styled.div`
   margin: 0 0 8px 0;
 `;
 
-const Tooltip = styled.div`
+const TooltipWrap = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -42,6 +44,8 @@ const Tooltip = styled.div`
 
 
 type Props = {
+  tooltip: Tooltip,
+
   zoomIn: (val: number) => void,
   zoomOut: (val: number) => void,
 }
@@ -50,6 +54,16 @@ export default class FloorplanUI extends React.Component {
 
   props: Props;
 
+  renderTooltip() {
+    if(this.props.tooltip.display) {
+      return (
+        <TooltipWrap x={this.props.tooltip.x} y={this.props.tooltip.y}>
+          { this.props.tooltip.text }
+        </TooltipWrap>
+      );
+    }
+  }
+
   render() {
     return (
       <div>
@@ -57,9 +71,7 @@ export default class FloorplanUI extends React.Component {
           <ZoomButton onClick={() => this.props.zoomIn(0.5)}>+</ZoomButton>
           <ZoomButton onClick={() => this.props.zoomOut(0.5)}>-</ZoomButton>
         </ZoomButtons>
-        <Tooltip x={400} y={300}>
-          {"Zergov | C-30"}
-        </Tooltip>
+        { this.renderTooltip() }
       </div>
     );
   }
