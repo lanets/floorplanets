@@ -1,5 +1,5 @@
 import reducer, { initial } from '../../src/reducers/tooltip';
-import { showTooltip } from '../../src/actions/tooltip';
+import { showTooltip, hideTooltip } from '../../src/actions/tooltip';
 
 
 describe('reducer handles SHOW_TOOLTIP action', () => {
@@ -26,5 +26,15 @@ describe('reducer handles SHOW_TOOLTIP action', () => {
     const after = reducer(before, action);
 
     expect(after.text).toEqual('some text goes here');
+  });
+});
+
+describe('reducer handles HIDE_TOOLTIP action', () => {
+  it('sets the display boolean to false', () => {
+    const action = hideTooltip();
+    const before = { ...initial, display: true };
+    const after = reducer(before, action);
+
+    expect(after.display).toEqual(false);
   });
 });
