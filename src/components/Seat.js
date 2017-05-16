@@ -13,6 +13,9 @@ export default class Seat {
 
   visible: boolean;
 
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+
   constructor(x: number, y: number) {
     this.position = new Point(x, y);
 
@@ -25,6 +28,8 @@ export default class Seat {
     });
 
     this.item.onClick = () => console.log(this.item);
+    this.item.onMouseEnter = () => this.onMouseEnter();
+    this.item.onMouseLeave = () => this.onMouseLeave();
   }
 
   get visible(): boolean {
