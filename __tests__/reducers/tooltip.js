@@ -19,4 +19,12 @@ describe('reducer handles SHOW_TOOLTIP action', () => {
     expect(after.x).toEqual(50);
     expect(after.y).toEqual(100);
   });
+
+  it('sets the text values to the action value', () => {
+    const action = showTooltip(50, 100, 'some text goes here');
+    const before = initial;
+    const after = reducer(before, action);
+
+    expect(after.text).toEqual('some text goes here');
+  });
 });
