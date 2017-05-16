@@ -10,7 +10,7 @@ export const initial: Tooltip = {
   text: '',
 }
 
-export default function reducer(state: Tooltip, action: Action): Tooltip {
+export default function reducer(state: Tooltip = initial, action: Action): Tooltip {
   switch(action.type) {
 
     case 'SHOW_TOOLTIP':
