@@ -14,9 +14,9 @@ describe('Passing an empty state to the tooltip reducer', () => {
 
 describe('reducer handles SHOW_TOOLTIP action', () => {
   it('sets the display boolean to true', () => {
-    const action = showTooltip('some text goes here');
+    const action = showTooltip(50, 100, 'some text goes here');
     const before = initial;
-    const after = { ...before, display: true };
+    const after = { ...before, display: true, x: 50, y: 100 };
 
     expect(reducer(before, action)).toEqual(after);
   });
