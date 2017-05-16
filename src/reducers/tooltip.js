@@ -7,6 +7,7 @@ export const initial: Tooltip = {
   display: false,
   x: 0,
   y: 0,
+  text: '',
 }
 
 export default function reducer(state: Tooltip, action: Action): Tooltip {
@@ -18,6 +19,7 @@ export default function reducer(state: Tooltip, action: Action): Tooltip {
         display: true,
         x: action.x,
         y: action.y,
+        text: action.text,
       };
 
     default:
