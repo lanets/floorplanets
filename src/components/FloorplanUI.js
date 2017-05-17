@@ -30,7 +30,7 @@ const ZoomButton = styled.div`
 `;
 
 const TooltipWrap = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   left: ${props => props.x}px;
@@ -48,16 +48,33 @@ type Props = {
 
   zoomIn: (val: number) => void,
   zoomOut: (val: number) => void,
-}
+};
+
+type State = {
+  mouseX: number,
+  mouseY: number,
+};
 
 export default class FloorplanUI extends React.Component {
 
   props: Props;
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      mouseX: 0,
+      mouseY: 0,
+    };
+
+    window.onmousemove = e => this.setState({ mouseX: e.x, mouseY: e.y });
+  }
 
   renderTooltip() {
     if(this.props.tooltip.display) {
       return (
-        <TooltipWrap x={this.props.tooltip.x} y={this.props.tooltip.y}>
+        <TooltipWrap x={this.state.mouseX} y={this.state.mouseY}>
           { this.props.tooltip.text }
         </TooltipWrap>
       );
