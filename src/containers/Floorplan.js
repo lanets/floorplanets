@@ -14,7 +14,7 @@ function mapStateToProps(state: Object, props: Object) {
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-    showTooltip: (x: number, y:number, text: string ) => dispatch(showTooltip(x, y, text)),
+    showTooltip: (text: string ) => dispatch(showTooltip(text)),
     hideTooltip: () => dispatch(hideTooltip()),
   }
 }

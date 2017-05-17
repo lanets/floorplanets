@@ -11,7 +11,7 @@ type Props = {
   seats: SeatsMap,
   zoom: number,
 
-  showTooltip: (x: number, y: number, text: string ) => void,
+  showTooltip: (text: string ) => void,
   hideTooltip: () => void,
 }
 
@@ -54,7 +54,7 @@ export default class Floorplan extends React.Component {
       const seat = new Seat(seatdata.x, seatdata.y);
 
       seat.onMouseEnter = () => {
-        this.props.showTooltip(100, 100, `ZergoV | ${seatdata.label}`);
+        this.props.showTooltip(`ZergoV | ${seatdata.label}`);
       }
 
       seat.onMouseLeave = () => {
