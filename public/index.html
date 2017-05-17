@@ -43,6 +43,9 @@
      */
     const floorplan = new floorplanets.Floorplan({
       div: 'root',
+      onSelectSeat: (seat) => {
+        console.log(seat);
+      },
     });
 
     floorplan.init();

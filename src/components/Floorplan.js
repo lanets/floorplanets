@@ -3,12 +3,16 @@ import React from 'react';
 import { paper, Point } from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
+import type { SeatData } from '../types';
 
+import { toSeatData } from '../conversions';
 import Seat from './Seat';
 
 
 type Props = {
   seats: SeatsMap,
+
+  onSelectSeat: (seat: SeatData) => void,
 }
 
 export default class Floorplan extends React.Component {
@@ -45,10 +49,11 @@ export default class Floorplan extends React.Component {
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y);
+
+      seat.onSelect = () => this.handleSelectSeat(id);
+
       this.seats.push(seat);
     }
-
-    console.log('Floorplan initialized.');
 
     this.update();
   }
@@ -74,6 +79,11 @@ export default class Floorplan extends React.Component {
     this.view.update();
 
     requestAnimationFrame(this.update);
+  }
+
+  handleSelectSeat(id: string) {
+    const seatState = this.props.seats[id];
+    this.props.onSelectSeat(toSeatData(seatState));
   }
 
   render() {
