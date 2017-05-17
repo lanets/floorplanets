@@ -3,11 +3,16 @@ import React from 'react';
 import paper from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
+import type { SeatData } from '../types';
 
+import { toSeatData } from '../conversions';
 import Seat from './Seat';
+
 
 type Props = {
   seats: SeatsMap,
+
+  onSelectSeat: (seat: SeatData) => void,
 }
 
 export default class Floorplan extends React.Component {
@@ -21,16 +26,24 @@ export default class Floorplan extends React.Component {
 
     paper.setup(this.refs.canvas);
 
-    const seats: Seat[] = [];
+    this.generateSeats();
+  }
 
-    // Render the seats based on the loaded data.
+  /**
+   *  Render seats on the floorplan based off of the Store.
+   */
+  generateSeats() {
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
-      seats.push(seat);
-    }
 
-    console.log('Floorplan initialized.');
+      seat.onSelect = () => this.handleSelectSeat(id);
+    }
+  }
+
+  handleSelectSeat(id: string) {
+    const seatState = this.props.seats[id];
+    this.props.onSelectSeat(toSeatData(seatState));
   }
 
   render() {
