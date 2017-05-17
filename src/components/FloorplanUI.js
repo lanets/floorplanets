@@ -72,13 +72,11 @@ export default class FloorplanUI extends React.Component {
   }
 
   renderTooltip() {
-    if(this.props.tooltip.display) {
-      return (
-        <TooltipWrap x={this.state.mouseX} y={this.state.mouseY}>
-          { this.props.tooltip.text }
-        </TooltipWrap>
-      );
-    }
+    return (
+      <TooltipWrap x={this.state.mouseX} y={this.state.mouseY}>
+        { this.props.tooltip.text }
+      </TooltipWrap>
+    );
   }
 
   render() {
@@ -88,7 +86,7 @@ export default class FloorplanUI extends React.Component {
           <ZoomButton onClick={() => this.props.zoomIn(0.5)}>+</ZoomButton>
           <ZoomButton onClick={() => this.props.zoomOut(0.5)}>-</ZoomButton>
         </ZoomButtons>
-        { this.renderTooltip() }
+        { this.props.tooltip.display ? this.renderTooltip() : null }
       </div>
     );
   }

@@ -53,13 +53,9 @@ export default class Floorplan extends React.Component {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y);
 
-      seat.onMouseEnter = () => {
-        this.props.showTooltip(`ZergoV | ${seatdata.label}`);
-      }
-
-      seat.onMouseLeave = () => {
-        this.props.hideTooltip();
-      }
+      // events binding
+      seat.onMouseEnter = () => this.props.showTooltip(seatdata.label);
+      seat.onMouseLeave = () => this.props.hideTooltip();
 
       this.seats.push(seat);
     }
