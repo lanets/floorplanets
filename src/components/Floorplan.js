@@ -3,13 +3,18 @@ import React from 'react';
 import { paper, Point } from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
+import type { SeatData } from '../types';
 
+import { toSeatData } from '../conversions';
 import Seat from './Seat';
 
 
 type Props = {
   seats: SeatsMap,
   zoom: number,
+
+  // JS api callback
+  onSelectSeat: (seat: SeatData) => void,
 
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
@@ -56,6 +61,7 @@ export default class Floorplan extends React.Component {
       // events binding
       seat.onMouseEnter = () => this.props.showTooltip(seatdata.label);
       seat.onMouseLeave = () => this.props.hideTooltip();
+      seat.onSelect = () => this.handleSelectSeat(id);
 
       this.seats.push(seat);
     }
@@ -86,6 +92,11 @@ export default class Floorplan extends React.Component {
     // Update the current view and call a new update when browser is ready.
     this.view.update();
     requestAnimationFrame(this.update);
+  }
+
+  handleSelectSeat(id: string) {
+    const seatState = this.props.seats[id];
+    this.props.onSelectSeat(toSeatData(seatState));
   }
 
   render() {

@@ -15,8 +15,10 @@ export default class Seat {
 
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  onSelect: () => void;
 
   constructor(x: number, y: number) {
+
     this.position = new Point(x, y);
 
     const radius = 9;
@@ -27,9 +29,9 @@ export default class Seat {
       strokeColor: 'black',
     });
 
-    this.item.onClick = () => console.log(this.item);
     this.item.onMouseEnter = () => this.onMouseEnter();
     this.item.onMouseLeave = () => this.onMouseLeave();
+    this.item.onClick = () => this.onSelect();
   }
 
   get visible(): boolean {
