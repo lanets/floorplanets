@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import paper from 'paper';
+import { paper, Point } from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
 import type { SeatData } from '../types';
@@ -18,27 +18,67 @@ type Props = {
 export default class Floorplan extends React.Component {
 
   props: Props;
+  view: paper.view;
 
-  componentDidMount() {
-    // 4:3 ratio
-    this.refs.canvas.width = 960;
-    this.refs.canvas.height = 540;
+  seats: Seat[];
+  update: () => void;
 
-    paper.setup(this.refs.canvas);
-
-    this.generateSeats();
+  constructor(props: Props) {
+    super(props);
+    this.update = this.update.bind(this);
   }
 
-  /**
-   *  Render seats on the floorplan based off of the Store.
-   */
-  generateSeats() {
+  componentDidMount() {
+    const canvas = this.refs.canvas;
+
+    // Setup canvas
+    canvas.width = 960;
+    canvas.height = 540;
+    paper.setup(canvas);
+
+    // view bindings
+    this.view = paper.view;
+    this.view.autoUpdate = false;
+    this.view.onMouseDrag = (e) => this.translateCamera(e);
+
+    // HARDCODED: center the view for our mocked seats
+    this.view.center = new Point(1175, 371);
+
+    // Render the seats based on the loaded data.
+    this.seats = [];
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
-      const seat = new Seat(seatdata.x, seatdata.y, seatdata.label);
+      const seat = new Seat(seatdata.x, seatdata.y);
 
       seat.onSelect = () => this.handleSelectSeat(id);
+
+      this.seats.push(seat);
     }
+
+    this.update();
+  }
+
+  translateCamera(event: Object) {
+    const delta = event.delta;
+
+    // smoothen transition
+    delta.length /= 2;
+
+    // inverts the scroll from the drag direction
+    this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
+
+    event.preventDefault()
+  }
+
+  update() {
+    // hide seats that are not in the view
+    this.seats.forEach((seat) => {
+      seat.visible = seat.position.isInside(this.view.bounds);
+    });
+
+    this.view.update();
+
+    requestAnimationFrame(this.update);
   }
 
   handleSelectSeat(id: string) {

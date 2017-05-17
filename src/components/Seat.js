@@ -1,5 +1,5 @@
 // @flow
-import {Point, Path, Group, PointText} from 'paper';
+import {Point, Shape, Group, PointText} from 'paper';
 
 import { FLAT_COLORS } from '../colors';
 
@@ -8,49 +8,33 @@ export default class Seat {
 
   item: Group;
   position: Point;
-  shape: Path;
+  shape: Shape;
   text: PointText;
+
+  visible: boolean;
 
   onSelect: () => void;
 
-  constructor(x: number, y: number, label: string) {
+  constructor(x: number, y: number) {
+
     this.position = new Point(x, y);
 
-    const radius = 40;
-    const outCircle = Path.Circle({
+    const radius = 9;
+    this.item = Shape.Circle({
       position: this.position,
       radius,
       fillColor: FLAT_COLORS.POMEGRANATE,
       strokeColor: 'black',
     });
 
-    const inCircle = Path.Circle({
-      position: this.position,
-      radius: radius * 0.8,
-      fillColor: FLAT_COLORS.ALIZARIN,
-    });
-
-    const fontSize = 12;
-    this.text = new PointText({
-      position: new Point(this.position.x, this.position.y + fontSize * 0.5),
-      content: label,
-      fillColor: 'black',
-      fontFamily: 'Helvetica',
-      fontSize,
-      justification: 'center',
-    });
-
-
-    this.item = new Group({
-      position: this.position,
-      children: [
-        outCircle,
-        inCircle,
-        this.text,
-      ],
-    });
-
-    // event handlers
     this.item.onClick = () => this.onSelect();
+  }
+
+  get visible(): boolean {
+    return this.item.visible;
+  }
+
+  set visible(val: boolean) {
+    this.item.visible = val;
   }
 }

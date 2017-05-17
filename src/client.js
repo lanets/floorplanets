@@ -9,8 +9,9 @@ import type { FloorplanConfig } from './types';
 
 import reducers from './reducers';
 import Floorplan from './containers/Floorplan';
-import { seatsData } from './__mock__/seats';
 import { loadSeats } from './actions/seats';
+
+import { lanETS2016 } from './__mock__/lanets2016';
 
 
 export class FloorplanClient {
@@ -35,7 +36,7 @@ export class FloorplanClient {
 
     // Simulating the loading of seats from an external
     // source: (file, localstorage, server, etc.) .
-    store.dispatch(loadSeats(seatsData));
+    store.dispatch(loadSeats(lanETS2016));
 
     // Inject floorplan in the div of the HTML host.
     render(
