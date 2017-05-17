@@ -1,6 +1,14 @@
 /* @flow */
 
 
+/**
+ *  Structure shown to the client to describe a seat object.
+ */
+export type SeatData = {
+  label: string,
+  data: Object,
+};
+
 /*
  * Description of the configuration object used to configure the
  * Floorplan.
@@ -10,16 +18,8 @@ export type FloorplanConfig = {
   // The id of the div on the HTML page in which the floorplan is going to
   // be displayed.
   div: string,
+
+  // Fired when the user selects a seat.
+  onSelectSeat: (seat: SeatData) => void;
 };
 
-/*
- * The data binding between the state of a seat and the graphic
- * representation of a seat.
- */
-export type SeatState = {
-  id: number,
-  x: number,
-  y: number,
-  label: string,  // what's written on the seat
-  data?: Object,  // aditionnal data associated with this seat.
-};

@@ -49,7 +49,9 @@ export class FloorplanClient {
     render(
       <Provider store={store}>
         <Wrapper>
-            <Floorplan />
+            <Floorplan
+              onSelectSeat={this.config.onSelectSeat}
+            />
             <FloorplanUI />
         </Wrapper>
       </Provider>,
