@@ -62,6 +62,11 @@ export default class Floorplan extends React.Component {
     this.update();
   }
 
+  componentDidUpdate() {
+    this.view.zoom = this.props.zoom;
+    this.update();
+  }
+
   translateCamera(event: Object) {
     const delta = event.delta;
 
