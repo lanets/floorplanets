@@ -29,12 +29,19 @@ const ZoomButton = styled.div`
   margin: 0 0 8px 0;
 `;
 
+/**
+ * A minimum offset between the mouse and the tooltip.
+ * Prevent the tooltip from beeing directly under the mouse and possible capturing a click event
+ * by mistakes.
+ */
+const tooltipOffsetX = 10;
+const tooltipOffsetY = 10;
 const TooltipWrap = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
+  left: ${props => props.x + tooltipOffsetX }px;
+  top: ${props => props.y + tooltipOffsetY }px;
   background-color: #000000;
   color: #ffffff;
   padding: 8px;
