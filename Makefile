@@ -2,7 +2,7 @@
 all: gofmt reactapp
 
 docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
-docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorplan-2 -w /go/src/github.com/lanets/floorplan-2 -u $$(id -u):$$(id -g) floorplan-golang
+docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorplanets -w /go/src/github.com/lanets/floorplanets -u $$(id -u):$$(id -g) floorplan-golang
 
 #######################
 ## FRONT-END TARGETS ##
