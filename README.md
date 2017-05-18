@@ -7,7 +7,7 @@ New floorplan for lanets.ca
 
 ## Installing dev environment
 
-Make sure you have [docker](https://www.docker.com/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
+Make sure you have [docker](https://www.docker.com/), [docker-compose](https://docs.docker.com/compose/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
 
 To install node dependencies, run :
 ```
