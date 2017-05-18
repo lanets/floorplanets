@@ -80,3 +80,8 @@ clean:
 	rm -f floorplan-api
 	rm -f .node-build-image
 	rm -f .golang-build-image
+
+.PHONY: mrproper
+mrproper: clean
+	docker image rm floorplan-golang
+	docker image rm floorplan-node
