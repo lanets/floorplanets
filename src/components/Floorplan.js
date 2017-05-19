@@ -11,6 +11,7 @@ import Seat from './Seat';
 
 type Props = {
   seats: SeatsMap,
+  zoom: number,
 
   onSelectSeat: (seat: SeatData) => void,
 }
@@ -39,12 +40,15 @@ export default class Floorplan extends React.Component {
     // view bindings
     this.view = paper.view;
     this.view.autoUpdate = false;
+
+    this.view.zoom = this.props.zoom;
+
     this.view.onMouseDrag = (e) => this.translateCamera(e);
 
     // HARDCODED: center the view for our mocked seats
     this.view.center = new Point(1175, 371);
 
-    // Render the seats based on the loaded data.
+    // Create and render the seats based on the loaded data.
     this.seats = [];
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
@@ -55,6 +59,11 @@ export default class Floorplan extends React.Component {
       this.seats.push(seat);
     }
 
+    this.update();
+  }
+
+  componentDidUpdate() {
+    this.view.zoom = this.props.zoom;
     this.update();
   }
 

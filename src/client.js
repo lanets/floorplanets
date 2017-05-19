@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import styled from 'styled-components';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -9,10 +10,16 @@ import type { FloorplanConfig } from './types';
 
 import reducers from './reducers';
 import Floorplan from './containers/Floorplan';
+import FloorplanUI from './containers/FloorplanUI';
 import { loadSeats } from './actions/seats';
 
 import { lanETS2016 } from './__mock__/lanets2016';
 
+
+const Wrapper = styled.div`
+ position: relative;
+ border: 1px solid black;
+`;
 
 export class FloorplanClient {
 
@@ -41,9 +48,12 @@ export class FloorplanClient {
     // Inject floorplan in the div of the HTML host.
     render(
       <Provider store={store}>
-          <Floorplan
-            onSelectSeat={this.config.onSelectSeat}
-          />
+        <Wrapper>
+            <Floorplan
+              onSelectSeat={this.config.onSelectSeat}
+            />
+            <FloorplanUI />
+        </Wrapper>
       </Provider>,
       document.getElementById(this.config.div)
     );
