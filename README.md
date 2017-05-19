@@ -1,4 +1,4 @@
-# floorpLanETS || floor(p)LanETS || floorplanETS
+# floorp[LanETS](https://lanets.ca) || floor(p)LanETS || floorplan[ETS](https://etsmtl.ca)
 [![Build Status](https://travis-ci.org/lanets/floorplan-2.svg?branch=master)](https://travis-ci.org/lanets/floorplan-2)
 
 New floorplan for lanets.ca
