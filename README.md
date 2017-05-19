@@ -1,4 +1,4 @@
-# floorp[LanETS](https://lanets.ca) || floor(p)LanETS || floorplan[ETS](https://etsmtl.ca)
+# floorp[LanETS](https://lanets.ca) || floor[(p)LanETS](https://www.nsec.io/2014/04/okiok-win-nsec14-competition/) || floorplan[ETS](https://etsmtl.ca)
 [![Build Status](https://travis-ci.org/lanets/floorplan-2.svg?branch=master)](https://travis-ci.org/lanets/floorplan-2)
 
 New floorplan for lanets.ca
