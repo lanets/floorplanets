@@ -13,6 +13,8 @@ export default class Seat {
 
   visible: boolean;
 
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
   onSelect: () => void;
 
   constructor(x: number, y: number) {
@@ -27,6 +29,8 @@ export default class Seat {
       strokeColor: 'black',
     });
 
+    this.item.onMouseEnter = () => this.onMouseEnter();
+    this.item.onMouseLeave = () => this.onMouseLeave();
     this.item.onClick = () => this.onSelect();
   }
 

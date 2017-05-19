@@ -13,7 +13,11 @@ type Props = {
   seats: SeatsMap,
   zoom: number,
 
+  // JS api callback
   onSelectSeat: (seat: SeatData) => void,
+
+  showTooltip: (text: string ) => void,
+  hideTooltip: () => void,
 }
 
 export default class Floorplan extends React.Component {
@@ -54,6 +58,9 @@ export default class Floorplan extends React.Component {
       const seatdata = this.props.seats[id];
       const seat = new Seat(seatdata.x, seatdata.y);
 
+      // events binding
+      seat.onMouseEnter = () => this.props.showTooltip(seatdata.label);
+      seat.onMouseLeave = () => this.props.hideTooltip();
       seat.onSelect = () => this.handleSelectSeat(id);
 
       this.seats.push(seat);
