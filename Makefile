@@ -83,5 +83,5 @@ clean:
 
 .PHONY: mrproper
 mrproper: clean
-	docker image rm floorplan-golang
-	docker image rm floorplan-node
+	- docker image rm -f floorplan-golang
+	- docker image rm -f floorplan-node
