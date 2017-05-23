@@ -92,6 +92,8 @@ clean:
 	rm -f floorplanets
 	rm -f .node-build-image
 	rm -f .golang-build-image
+	rm -rf flow-typed
+	rm -rf build
 
 .PHONY: mrproper
 mrproper: clean
