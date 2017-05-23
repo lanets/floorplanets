@@ -52,7 +52,7 @@ nodetest-CI: node_modules .node-build-image eslint flow
 
 .PHONY: gobuild
 gobuild: .golang-build-image
-	$(docker_run_go) go build ./...
+	$(docker_run_go) bash -c "go get -v ./... && go build ./... && go build ./.../cmd/..."
 
 .PHONY: gofmt
 gofmt: .golang-build-image
@@ -77,7 +77,7 @@ test: gotest nodetest-CI
 clean:
 	rm -rf node_modules
 	rm -f npm-debug.log
-	rm -f floorplan-api
+	rm -f floorplanets
 	rm -f .node-build-image
 	rm -f .golang-build-image
 
