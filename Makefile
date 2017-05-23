@@ -77,7 +77,7 @@ test: gotest nodetest-CI
 clean:
 	rm -rf node_modules
 	rm -f npm-debug.log
-	rm -f floorplan-api
+	rm -f floorplanets
 	rm -f .node-build-image
 	rm -f .golang-build-image
 
