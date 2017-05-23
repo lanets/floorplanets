@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+    floorplanets:
+        image: debian:stretch
+        command: /opt/floorplanets
+        ports:
+            - ${FLOORPLANETS_PORT}:8080
+        volumes:
+            - ./floorplanets:/opt/floorplanets
