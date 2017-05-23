@@ -17,8 +17,11 @@ func NewFloorplanetsServer(address string) (*FloorplanetsServer, error) {
 	// Create a router
 	router := api.NewRouter()
 
-	// Create an http server with the router
-	httpServer := &http.Server{Handler: router}
+	// Create the logged handler
+	loggedHandler := logHandler(router)
+
+	// Create an http server with the logged handler
+	httpServer := &http.Server{Handler: loggedHandler}
 
 	// Listen on the given address
 	listener, err := net.Listen("tcp", address)
