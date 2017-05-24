@@ -64,7 +64,7 @@ run-floorplanets: floorplanets
 
 FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
 floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES)
-	$(docker_run_go) bash -c "go get -v ./... && go build ./... && go build ./.../cmd/..."
+	$(docker_run_go) bash -c "go get -v ./... && go build ./... && go build github.com/lanets/floorplanets/backend/cmd/floorplanets"
 
 .PHONY: gofmt
 gofmt: .golang-build-image
