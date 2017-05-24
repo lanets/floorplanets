@@ -1,8 +1,16 @@
 .PHONY: all
 all: gofmt reactapp
 
-docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $$(id -u):$$(id -g)
-docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorplanets -w /go/src/github.com/lanets/floorplanets -u $$(id -u):$$(id -g) floorplan-golang
+export FLOORPLANETS_USER = $(shell id -u)
+
+# This variable is used to dermine which port the floorplanets service
+# container should be mapped to.
+ifeq ($(FLOORPLANETS_PORT),)
+    export FLOORPLANETS_PORT = 8080
+endif
+
+docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER)
+docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorplanets -w /go/src/github.com/lanets/floorplanets -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER) floorplan-golang
 
 #######################
 ## FRONT-END TARGETS ##
@@ -46,12 +54,16 @@ nodetest-CI: node_modules .node-build-image eslint flow
 ## BACKEND TARGETS ##
 #####################
 
+.PHONY: run-floorplanets
+run-floorplanets: floorplanets
+	docker-compose -f docker-compose.floorplanets.yml up
+
 .golang-build-image:
 	docker build --build-arg userid=$$(id -u) -f docker/golang -t floorplan-golang docker
 	touch .golang-build-image
 
-.PHONY: gobuild
-gobuild: .golang-build-image
+FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
+floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES)
 	$(docker_run_go) bash -c "go get -v ./... && go build ./... && go build github.com/lanets/floorplanets/backend/cmd/floorplanets"
 
 .PHONY: gofmt
@@ -68,7 +80,7 @@ gotest: .golang-build-image
 #####################
 
 .PHONY: build
-build: nodebuild gobuild
+build: nodebuild floorplanets
 
 .PHONY: test
 test: gotest nodetest-CI
@@ -80,8 +92,10 @@ clean:
 	rm -f floorplanets
 	rm -f .node-build-image
 	rm -f .golang-build-image
+	rm -rf flow-typed
+	rm -rf build
 
 .PHONY: mrproper
 mrproper: clean
-	docker image rm floorplan-golang
-	docker image rm floorplan-node
+	- docker image rm -f floorplan-golang
+	- docker image rm -f floorplan-node

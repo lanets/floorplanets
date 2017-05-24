@@ -1,11 +1,11 @@
 # floorp[LanETS](https://lanets.ca) || floor[(p)LanETS](https://www.nsec.io/2014/04/okiok-win-nsec14-competition/) || floorplan[ETS](https://etsmtl.ca)
-[![Build Status](https://travis-ci.org/lanets/floorplanets.svg?branch=master)](https://travis-ci.org/lanets/floorplan-2)
+[![Build Status](https://travis-ci.org/lanets/floorplanets.svg?branch=master)](https://travis-ci.org/lanets/floorplanets)
 
 New floorplan for lanets.ca
 
 ## Installing dev environment
 
-Make sure you have [docker](https://www.docker.com/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
+Make sure you have [docker](https://www.docker.com/), [docker-compose](https://docs.docker.com/compose/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
 
 To install node dependencies, run :
 ```
