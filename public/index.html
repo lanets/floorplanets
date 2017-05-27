@@ -52,8 +52,8 @@
         console.log(seat);
       },
       seatColor: (seat) => {
-        // odd seats are blue, even seats are red.
-        var lastdigit = parseInt(seat.label.slice(-1));
+        // odd rows are blue, even rows are red.
+        var lastdigit = seat.label.charCodeAt(0);
         return lastdigit % 2 === 0 ? 'blue' : 'red';
       }
     });
