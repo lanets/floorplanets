@@ -1,8 +1,22 @@
 // @flow
-import {Point, Shape, Group, PointText} from 'paper';
-
+import { Point, Shape, Group, PointText } from 'paper';
 import { FLAT_COLORS } from '../colors';
 
+// Define the visual definition of a `Seat` and clone
+// this definition anytime a new Seat is needed.
+let seatDefinition;
+function createSeat() {
+  if (!seatDefinition) {
+    seatDefinition = Shape.Circle({
+      position: new Point(0, 0),
+      radius: 8,
+      strokeColor: 'black',
+      fillColor: FLAT_COLORS.POMEGRANATE,
+    })
+  }
+
+  return seatDefinition.clone();
+}
 
 export default class Seat {
 
@@ -24,12 +38,8 @@ export default class Seat {
     this.id = id;
     this.position = new Point(x, y);
 
-    const radius = 9;
-    this.item = Shape.Circle({
-      position: this.position,
-      radius,
-      strokeColor: 'black',
-    });
+    this.item = createSeat();
+    this.item.position = this.position;
 
     this.item.onMouseEnter = () => this.onMouseEnter();
     this.item.onMouseLeave = () => this.onMouseLeave();

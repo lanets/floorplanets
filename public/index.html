@@ -51,6 +51,11 @@
       onSelectSeat: (seat) => {
         console.log(seat);
       },
+      seatColor: (seat) => {
+        // odd seats are blue, even seats are red.
+        var lastdigit = parseInt(seat.label.slice(-1));
+        return lastdigit % 2 === 0 ? 'blue' : 'red';
+      }
     });
 
     floorplan.init();
