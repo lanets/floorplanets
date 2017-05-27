@@ -90,13 +90,19 @@ export default class Floorplan extends React.Component {
 
   update() {
     requestAnimationFrame(() => {
-      // hide seats that are not in the view
+
+      // Draw each seats based on the dynamic properties of the configuration provided
+      // by the user.
       this.seats.forEach((seat) => {
+
+        // generate the seatData used for callbacks
         const seatData = toSeatData(this.props.seats[seat.id]);
+
         seat.visible = seat.position.isInside(this.view.bounds);
         seat.color = this.props.seatColor(seatData);
       });
 
+      // redraw the whole floorplan
       this.view.update();
     });
   }
