@@ -111,7 +111,6 @@ export default class Floorplan extends React.Component {
 
   update() {
     if (this.shouldRaster) {
-      // TODO: Change isEmpty call to a call that check if the representation of the seats has changed
       if(this.rasterLayer.isEmpty())
         this.rasterLayer.addChild(this.seatsLayer.rasterize());
 
