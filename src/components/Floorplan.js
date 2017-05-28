@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { paper, Point } from 'paper';
+import { paper, Point, Layer } from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
 import type { SeatData } from '../types';
@@ -26,6 +26,7 @@ export default class Floorplan extends React.Component {
   props: Props;
   view: paper.view;
 
+  shouldRaster: bool;
   seats: Seat[];
   update: () => void;
 
@@ -84,6 +85,9 @@ export default class Floorplan extends React.Component {
     // inverts the scroll from the drag direction
     this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
 
+    // When translating, raster the viewport for insane performances.
+    this.shouldRaster = true;
+
     event.preventDefault()
     this.update();
   }
@@ -91,16 +95,34 @@ export default class Floorplan extends React.Component {
   update() {
     requestAnimationFrame(() => {
 
-      // Draw each seats based on the dynamic properties of the configuration provided
-      // by the user.
-      this.seats.forEach((seat) => {
+      if (this.shouldRaster) {
 
-        // generate the seatData used for callbacks
-        const seatData = toSeatData(this.props.seats[seat.id]);
+        if(paper.project.layers.length < 2) {
+          const rasterLayer = paper.project.addLayer(new Layer());
+          // Freeze the canvas and render a raster on the raster layer
+          rasterLayer.addChild(paper.project.layers[0].rasterize());
 
-        seat.visible = seat.position.isInside(this.view.bounds);
-        seat.color = this.props.seatColor(seatData);
-      });
+          // hide the floorplan layer
+          paper.project.layers[0].visible = false;
+        }
+
+      } else {
+        // Draw each seats based on the dynamic properties of the configuration provided
+        // by the user.
+        this.seats.forEach((seat) => {
+
+          // generate the seatData used for callbacks
+          const seatData = toSeatData(this.props.seats[seat.id]);
+
+          // seat.visible = seat.position.isInside(this.view.bounds);
+          seat.color = this.props.seatColor(seatData);
+
+        });
+      }
+
+
+      // reset the raster flag
+      this.shouldRaster = false;
 
       // redraw the whole floorplan
       this.view.update();
