@@ -50,6 +50,7 @@ export default class Floorplan extends React.Component {
     this.view.zoom = this.props.zoom;
 
     this.view.onMouseDrag = (e) => this.translateCamera(e);
+    this.view.onMouseUp = (e) => this.handleMouseUp(e);
 
     // HARDCODED: center the view for our mocked seats
     this.view.center = new Point(1175, 371);
@@ -76,6 +77,13 @@ export default class Floorplan extends React.Component {
     this.update();
   }
 
+  handleMouseUp(e: Object) {
+    this.shouldRaster = false;
+
+    e.preventDefault();
+    this.update();
+  }
+
   translateCamera(event: Object) {
     const delta = event.delta;
 
@@ -93,40 +101,45 @@ export default class Floorplan extends React.Component {
   }
 
   update() {
-    requestAnimationFrame(() => {
 
-      if (this.shouldRaster) {
-
-        if(paper.project.layers.length < 2) {
-          const rasterLayer = paper.project.addLayer(new Layer());
-          // Freeze the canvas and render a raster on the raster layer
-          rasterLayer.addChild(paper.project.layers[0].rasterize());
-
-          // hide the floorplan layer
-          paper.project.layers[0].visible = false;
-        }
-
-      } else {
-        // Draw each seats based on the dynamic properties of the configuration provided
-        // by the user.
-        this.seats.forEach((seat) => {
-
-          // generate the seatData used for callbacks
-          const seatData = toSeatData(this.props.seats[seat.id]);
-
-          // seat.visible = seat.position.isInside(this.view.bounds);
-          seat.color = this.props.seatColor(seatData);
-
-        });
+    if (this.shouldRaster) {
+      if(paper.project.layers.length < 2) {
+        // Create a layer that holds a raster copy of the Seats layer.
+        const rasterLayer = paper.project.addLayer(new Layer());
+        rasterLayer.addChild(paper.project.layers[0].rasterize());
       }
 
+      // hide the floorplan layer
+      paper.project.layers[0].visible = false;
+      paper.project.layers[1].visible = true;
 
-      // reset the raster flag
-      this.shouldRaster = false;
+    } else {
 
-      // redraw the whole floorplan
-      this.view.update();
-    });
+      if(paper.project.layers.length > 1) {
+        // hide Rastered layer
+        paper.project.layers[1].visible = false;
+        // show the floorplan layer
+        paper.project.layers[0].visible = true;
+      }
+
+      // Draw each seats based on the dynamic properties of the configuration provided
+      // by the user.
+      this.seats.forEach((seat) => {
+
+        // generate the seatData used for callbacks
+        const seatData = toSeatData(this.props.seats[seat.id]);
+
+        // seat.visible = seat.position.isInside(this.view.bounds);
+        seat.color = this.props.seatColor(seatData);
+
+      });
+    }
+
+    // reset the raster flag
+    this.shouldRaster = false;
+
+    // redraw the whole floorplan
+    this.view.requestUpdate(this.view.update())
   }
 
   handleSelectSeat(id: string) {
