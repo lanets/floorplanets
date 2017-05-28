@@ -25,6 +25,8 @@ export default class Floorplan extends React.Component {
 
   props: Props;
   view: paper.view;
+  rasterLayer: Layer;
+  seatsLayer: Layer;
 
   shouldRaster: bool;
   seats: Seat[];
@@ -41,21 +43,22 @@ export default class Floorplan extends React.Component {
     // Setup canvas
     canvas.width = 960;
     canvas.height = 540;
-    paper.setup(canvas);
 
-    // view bindings
+    // Configure the floorplan
+    paper.setup(canvas);
     this.view = paper.view;
     this.view.autoUpdate = false;
-
     this.view.zoom = this.props.zoom;
-
     this.view.onMouseDrag = (e) => this.translateCamera(e);
     this.view.onMouseUp = (e) => this.handleMouseUp(e);
+
+    this.seatsLayer = paper.project.activeLayer;
+    this.rasterLayer = paper.project.addLayer(new Layer());
 
     // HARDCODED: center the view for our mocked seats
     this.view.center = new Point(1175, 371);
 
-    // Create and render the seats based on the loaded data.
+    // Create and render the seats based on the loaded floorplan.
     this.seats = [];
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
@@ -72,6 +75,9 @@ export default class Floorplan extends React.Component {
     this.update();
   }
 
+  /**
+   * Called when the stores the floorplan is subscribed to is updated.
+   */
   componentDidUpdate() {
     this.view.zoom = this.props.zoom;
     this.update();
@@ -79,8 +85,6 @@ export default class Floorplan extends React.Component {
 
   handleMouseUp(e: Object) {
     this.shouldRaster = false;
-
-    e.preventDefault();
     this.update();
   }
 
@@ -96,50 +100,43 @@ export default class Floorplan extends React.Component {
     // When translating, raster the viewport for insane performances.
     this.shouldRaster = true;
 
-    event.preventDefault()
     this.update();
   }
 
   update() {
-
     if (this.shouldRaster) {
-      if(paper.project.layers.length < 2) {
-        // Create a layer that holds a raster copy of the Seats layer.
-        const rasterLayer = paper.project.addLayer(new Layer());
-        rasterLayer.addChild(paper.project.layers[0].rasterize());
-      }
+      // TODO: Change isEmpty call to a call that check if the representation of the seats has changed
+      if(this.rasterLayer.isEmpty())
+        this.rasterLayer.addChild(this.seatsLayer.rasterize());
 
-      // hide the floorplan layer
-      paper.project.layers[0].visible = false;
-      paper.project.layers[1].visible = true;
-
+      // hide the seats layer and activate the raster layer.
+      this.seatsLayer.visible = false;
+      this.rasterLayer.visible = true;
     } else {
+      // hide the raster layer and activate the seats layer.
+      this.rasterLayer.visible = false;
+      this.seatsLayer.visible = true;
 
-      if(paper.project.layers.length > 1) {
-        // hide Rastered layer
-        paper.project.layers[1].visible = false;
-        // show the floorplan layer
-        paper.project.layers[0].visible = true;
-      }
-
-      // Draw each seats based on the dynamic properties of the configuration provided
-      // by the user.
-      this.seats.forEach((seat) => {
-
-        // generate the seatData used for callbacks
-        const seatData = toSeatData(this.props.seats[seat.id]);
-
-        // seat.visible = seat.position.isInside(this.view.bounds);
-        seat.color = this.props.seatColor(seatData);
-
-      });
+      this.drawSeats();
     }
 
-    // reset the raster flag
+    // reset the raster flag and redraw the floorplan.
     this.shouldRaster = false;
-
-    // redraw the whole floorplan
     this.view.requestUpdate(this.view.update())
+  }
+
+  /**
+   * Draw each seats based on the dynamic properties of the configuration provided
+   * by the user.
+   */
+  drawSeats() {
+    this.seats.forEach((seat) => {
+      // generate the seatData used for callbacks
+      const seatData = toSeatData(this.props.seats[seat.id]);
+
+      // seat.visible = seat.position.isInside(this.view.bounds);
+      seat.color = this.props.seatColor(seatData);
+    });
   }
 
   handleSelectSeat(id: string) {
