@@ -122,7 +122,7 @@ export default class Floorplan extends React.Component {
       this.rasterLayer.visible = false;
       this.seatsLayer.visible = true;
 
-      this.drawSeats();
+      this.updateSeats();
     }
 
     // reset the raster flag and redraw the floorplan.
@@ -131,10 +131,10 @@ export default class Floorplan extends React.Component {
   }
 
   /**
-   * Draw each seats based on the dynamic properties of the configuration provided
+   * Update each seats based on the callback properties of the configuration provided
    * by the user.
    */
-  drawSeats() {
+  updateSeats() {
     this.seats.forEach((seat) => {
       // generate the seatData used for callbacks
       const seatData = toSeatData(this.props.seats[seat.id]);
