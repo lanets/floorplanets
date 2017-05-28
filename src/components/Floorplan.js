@@ -15,6 +15,7 @@ type Props = {
 
   // JS api callback
   onSelectSeat: (seat: SeatData) => void,
+  seatColor: (seat: SeatData) => string,
 
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
@@ -56,7 +57,7 @@ export default class Floorplan extends React.Component {
     this.seats = [];
     for (const id in this.props.seats) {
       const seatdata = this.props.seats[id];
-      const seat = new Seat(seatdata.x, seatdata.y);
+      const seat = new Seat(id, seatdata.x, seatdata.y);
 
       // events binding
       seat.onMouseEnter = () => this.props.showTooltip(seatdata.label);
@@ -89,11 +90,19 @@ export default class Floorplan extends React.Component {
 
   update() {
     requestAnimationFrame(() => {
-      // hide seats that are not in the view
+
+      // Draw each seats based on the dynamic properties of the configuration provided
+      // by the user.
       this.seats.forEach((seat) => {
+
+        // generate the seatData used for callbacks
+        const seatData = toSeatData(this.props.seats[seat.id]);
+
         seat.visible = seat.position.isInside(this.view.bounds);
+        seat.color = this.props.seatColor(seatData);
       });
 
+      // redraw the whole floorplan
       this.view.update();
     });
   }

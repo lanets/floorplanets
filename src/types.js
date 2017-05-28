@@ -20,6 +20,9 @@ export type FloorplanConfig = {
   div: string,
 
   // Fired when the user selects a seat.
-  onSelectSeat: (seat: SeatData) => void;
+  onSelectSeat: (seat: SeatData) => void,
+
+  // callback defining the color a seat should have
+  seatColor: (seat: SeatData) => ?string,
 };
 
