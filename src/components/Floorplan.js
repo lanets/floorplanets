@@ -49,8 +49,8 @@ export default class Floorplan extends React.Component {
     this.view = paper.view;
     this.view.autoUpdate = false;
     this.view.zoom = this.props.zoom;
-    this.view.onMouseDrag = (e) => this.translateCamera(e);
-    this.view.onMouseUp = (e) => this.handleMouseUp(e);
+    this.view.onMouseDrag = (e) => this.onMouseDrag(e);
+    this.view.onMouseUp = (e) => this.onMouseUp(e);
 
     this.seatsLayer = paper.project.activeLayer;
     this.rasterLayer = paper.project.addLayer(new Layer());
@@ -61,13 +61,13 @@ export default class Floorplan extends React.Component {
     // Create and render the seats based on the loaded floorplan.
     this.seats = [];
     for (const id in this.props.seats) {
-      const seatdata = this.props.seats[id];
-      const seat = new Seat(id, seatdata.x, seatdata.y);
+      const seatstate = this.props.seats[id];
+      const seat = new Seat(id, seatstate.x, seatstate.y);
 
       // events binding
-      seat.onMouseEnter = () => this.props.showTooltip(seatdata.label);
+      seat.onMouseEnter = () => this.props.showTooltip(seatstate.label);
       seat.onMouseLeave = () => this.props.hideTooltip();
-      seat.onSelect = () => this.handleSelectSeat(id);
+      seat.onSelect = () => this.props.onSelectSeat(toSeatData(seatstate));
 
       this.seats.push(seat);
     }
@@ -83,23 +83,29 @@ export default class Floorplan extends React.Component {
     this.update();
   }
 
-  handleMouseUp(e: Object) {
-    this.shouldRaster = false;
-    this.update();
-  }
+  /**
+   * Called when the user drags the floorplan around.
+   */
+  onMouseDrag(e: Object) {
+    const delta = e.delta;
 
-  translateCamera(event: Object) {
-    const delta = event.delta;
-
-    // smoothen transition
+    // reduce drag length
     delta.length /= 2;
 
     // inverts the scroll from the drag direction
     this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
 
-    // When translating, raster the viewport for insane performances.
+    // When dragging the floorplan, raster the viewport for insane performances.
     this.shouldRaster = true;
 
+    this.update();
+  }
+
+  /**
+   * Called when the user is done dragging the floorplan
+   */
+  onMouseUp(e: Object) {
+    this.shouldRaster = false;
     this.update();
   }
 
@@ -139,14 +145,7 @@ export default class Floorplan extends React.Component {
     });
   }
 
-  handleSelectSeat(id: string) {
-    const seatState = this.props.seats[id];
-    this.props.onSelectSeat(toSeatData(seatState));
-  }
-
   render() {
-    return (
-      <canvas ref="canvas" />
-    );
+    return <canvas ref="canvas" />;
   }
 }
