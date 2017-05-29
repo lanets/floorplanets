@@ -15,7 +15,8 @@ type Props = {
 
   // JS api callback
   onSelectSeat: (seat: SeatData) => void,
-  seatColor: (seat: SeatData) => string,
+  seatColor: (seat: SeatData) => ?string,
+  seatTooltip: (seat: SeatData) => ?string,
 
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
@@ -65,7 +66,11 @@ export default class Floorplan extends React.Component {
       const seat = new Seat(id, seatstate.x, seatstate.y);
 
       // events binding
-      seat.onMouseEnter = () => this.props.showTooltip(seatstate.label);
+      seat.onMouseEnter = () => {
+        const tooltipText = this.props.seatTooltip(toSeatData(seatstate));
+        this.props.showTooltip(tooltipText || seatstate.label);
+      };
+
       seat.onMouseLeave = () => this.props.hideTooltip();
       seat.onSelect = () => this.props.onSelectSeat(toSeatData(seatstate));
 
@@ -76,6 +81,7 @@ export default class Floorplan extends React.Component {
   }
 
   /**
+   *
    * Called when the stores the floorplan is subscribed to is updated.
    */
   componentDidUpdate() {
