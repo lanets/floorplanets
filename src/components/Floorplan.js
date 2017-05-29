@@ -136,10 +136,8 @@ export default class Floorplan extends React.Component {
    */
   updateSeats() {
     this.seats.forEach((seat) => {
-      // generate the seatData used for callbacks
       const seatData = toSeatData(this.props.seats[seat.id]);
 
-      // seat.visible = seat.position.isInside(this.view.bounds);
       seat.color = this.props.seatColor(seatData);
     });
   }
