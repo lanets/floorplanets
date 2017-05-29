@@ -24,5 +24,8 @@ export type FloorplanConfig = {
 
   // callback defining the color a seat should have
   seatColor: (seat: SeatData) => ?string,
+
+  // callback defining the text to render in the tooltip of a seat
+  seatTooltip: (seat: SeatData) => ?string,
 };
 

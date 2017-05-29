@@ -52,6 +52,7 @@ export class FloorplanClient {
             <Floorplan
               onSelectSeat={this.config.onSelectSeat}
               seatColor={this.config.seatColor || (() => null)}
+              seatTooltip={this.config.seatTooltip || (() => null)}
             />
             <FloorplanUI />
         </Wrapper>
