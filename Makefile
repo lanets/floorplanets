@@ -1,5 +1,5 @@
 .PHONY: all
-all: gofmt reactapp
+all: nodebuild floorplanets
 
 export FLOORPLANETS_USER = $(shell id -u)
 
@@ -82,9 +82,6 @@ gotest: .golang-build-image vendor
 #####################
 ## GENERAL TARGETS ##
 #####################
-
-.PHONY: build
-build: nodebuild floorplanets
 
 .PHONY: test
 test: gotest nodetest-CI
