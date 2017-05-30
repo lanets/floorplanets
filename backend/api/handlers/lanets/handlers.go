@@ -6,6 +6,9 @@ import (
 	"net/http"
 )
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, lanetslogo.Logo)
+func indexHandler() http.Handler {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, lanetslogo.Logo)
+	}
+	return http.HandlerFunc(handler)
 }
