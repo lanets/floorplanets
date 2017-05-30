@@ -17,3 +17,13 @@ func TestIndexHandler(t *testing.T) {
 		t.Error("Expected Lan ETS logo ", res.Body.String())
 	}
 }
+
+func TextIndexHandlerPost(t *testing.T) {
+	apitest := api_test.NewApiTest()
+	req, _ := http.NewRequest("POST", "/lanets/", nil)
+	res := apitest.ServeHTTP(req)
+
+	if res.Result().StatusCode != 404 {
+		t.Error("IndexHandler should not respond to a POST", res.Body.String())
+	}
+}
