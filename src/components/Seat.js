@@ -3,6 +3,8 @@ import { Point, Shape, Group, PointText } from 'paper';
 import { FLAT_COLORS } from '../colors';
 
 
+const FONTSIZE = 4;
+
 export default class Seat {
 
   id: string;
@@ -34,8 +36,8 @@ export default class Seat {
 
     // the text label inside the seat.
     this.textLabel = new PointText({
-      point: new Point(x, y + 2),
-      fontSize: 4,
+      point: new Point(x, y + FONTSIZE * 0.5),
+      fontSize: FONTSIZE,
       justification: 'center',
       fillColor: 'black',
       content: '',
