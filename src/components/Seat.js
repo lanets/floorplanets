@@ -57,8 +57,8 @@ export default class Seat {
     return this.seatShape.fillColor;
   }
 
-  set color(val: ?string) {
-    this.seatShape.fillColor = val || FLAT_COLORS.POMEGRANATE;
+  set color(val: string) {
+    this.seatShape.fillColor = val;
   }
 
   get visible(): boolean {

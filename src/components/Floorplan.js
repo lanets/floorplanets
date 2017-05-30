@@ -7,6 +7,7 @@ import type { SeatData } from '../types';
 
 import { toSeatData } from '../conversions';
 import Seat from './Seat';
+import { FLAT_COLORS } from '../colors';
 
 
 type Props = {
@@ -144,8 +145,8 @@ export default class Floorplan extends React.Component {
     this.seats.forEach((seat) => {
       const seatData = toSeatData(this.props.seats[seat.id]);
 
-      seat.color = this.props.seatColor(seatData);
-      seat.label = this.props.seatLabel(seatData);
+      seat.color = this.props.seatColor(seatData) || FLAT_COLORS.POMEGRANATE;
+      seat.label = this.props.seatLabel(seatData) || '';
     });
   }
 
