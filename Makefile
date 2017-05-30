@@ -16,7 +16,7 @@ docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorpla
 ## FRONT-END TARGETS ##
 #######################
 
-.node-build-image:
+.node-build-image: docker/node Makefile
 	docker build --build-arg userid=$$(id -u) -f docker/node -t floorplan-node docker
 	touch .node-build-image
 
@@ -58,7 +58,7 @@ nodetest-CI: node_modules .node-build-image eslint flow
 run-floorplanets: floorplanets
 	docker-compose -f docker-compose.floorplanets.yml up
 
-.golang-build-image:
+.golang-build-image: docker/golang Makefile
 	docker build --build-arg userid=$$(id -u) -f docker/golang -t floorplan-golang docker
 	touch .golang-build-image
 
