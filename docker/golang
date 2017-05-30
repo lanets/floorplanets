@@ -2,7 +2,11 @@ FROM golang:1.8
 
 ARG userid
 
-RUN useradd -u "$userid" USERNAME
+RUN useradd -u "$userid" floorplanets
 
 RUN mkdir /go/src/github.com
 RUN chmod 777 /go/src/github.com
+
+USER floorplanets
+
+RUN go get -u github.com/golang/dep/cmd/dep
