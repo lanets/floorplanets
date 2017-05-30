@@ -62,17 +62,21 @@ run-floorplanets: floorplanets
 	docker build --build-arg userid=$$(id -u) -f docker/golang -t floorplan-golang docker
 	touch .golang-build-image
 
+vendor: .golang-build-image Gopkg.lock Gopkg.toml
+	rm -rf vendor
+	$(docker_run_go) dep ensure
+
 FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
-floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES)
-	$(docker_run_go) bash -c "go get -v ./... && go build ./... && go build github.com/lanets/floorplanets/backend/cmd/floorplanets"
+floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES) vendor
+	$(docker_run_go) bash -c 'go build $$(go list ./... | grep -v "/vendor/") && go build github.com/lanets/floorplanets/backend/cmd/floorplanets'
 
 .PHONY: gofmt
 gofmt: .golang-build-image
-	$(docker_run_go) go fmt ./...
+	$(docker_run_go) bash -c 'go fmt $$(go list ./... | grep -v "/vendor/")'
 
 .PHONY: gotest
-gotest: .golang-build-image
-	$(docker_run_go) bash -c "go get -v -t ./... && go test ./..."
+gotest: .golang-build-image vendor
+	$(docker_run_go) bash -c 'go test $$(go list ./... | grep -v "/vendor/")'
 
 
 #####################
@@ -94,6 +98,7 @@ clean:
 	rm -f .golang-build-image
 	rm -rf flow-typed
 	rm -rf build
+	rm -rf vendor
 
 .PHONY: mrproper
 mrproper: clean
