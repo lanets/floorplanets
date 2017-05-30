@@ -13,6 +13,7 @@ export default class Seat {
 
   visible: boolean;
   color: string;
+  label: string;
 
   onMouseEnter: () => void;
   onMouseLeave: () => void;
@@ -23,12 +24,27 @@ export default class Seat {
     this.id = id;
     this.position = new Point(x, y);
 
-    this.item = Shape.Circle({
+    // the circle representing the seat.
+    this.seatShape = Shape.Circle({
       position: this.position,
       radius: 8,
       strokeColor: 'black',
       fillColor: FLAT_COLORS.POMEGRANATE,
     });
+
+    // the text label inside the seat.
+    this.textLabel = new PointText({
+      point: new Point(x, y + 2),
+      fontSize: 4,
+      justification: 'center',
+      fillColor: 'black',
+      content: '',
+    });
+
+    this.item = new Group([
+      this.seatShape,
+      this.textLabel,
+    ])
 
     this.item.onMouseEnter = () => this.onMouseEnter();
     this.item.onMouseLeave = () => this.onMouseLeave();
@@ -36,11 +52,11 @@ export default class Seat {
   }
 
   get color(): string {
-    return this.item.fillColor;
+    return this.seatShape.fillColor;
   }
 
   set color(val: ?string) {
-    this.item.fillColor = val || FLAT_COLORS.POMEGRANATE;
+    this.seatShape.fillColor = val || FLAT_COLORS.POMEGRANATE;
   }
 
   get visible(): boolean {
@@ -49,5 +65,12 @@ export default class Seat {
 
   set visible(val: boolean) {
     this.item.visible = val;
+  }
+
+  get label(): string {
+    return this.textLabel.content;
+  }
+  set label(val: string) {
+    this.textLabel.content = val;
   }
 }

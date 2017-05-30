@@ -17,6 +17,7 @@ type Props = {
   onSelectSeat: (seat: SeatData) => void,
   seatColor: (seat: SeatData) => ?string,
   seatTooltip: (seat: SeatData) => ?string,
+  seatLabel: (seat: SeatData) => ?string,
 
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
@@ -70,7 +71,6 @@ export default class Floorplan extends React.Component {
         const tooltipText = this.props.seatTooltip(toSeatData(seatstate));
         this.props.showTooltip(tooltipText || seatstate.label);
       };
-
       seat.onMouseLeave = () => this.props.hideTooltip();
       seat.onSelect = () => this.props.onSelectSeat(toSeatData(seatstate));
 
@@ -145,6 +145,7 @@ export default class Floorplan extends React.Component {
       const seatData = toSeatData(this.props.seats[seat.id]);
 
       seat.color = this.props.seatColor(seatData);
+      seat.label = this.props.seatLabel(seatData);
     });
   }
 
