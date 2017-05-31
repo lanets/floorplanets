@@ -54,7 +54,7 @@
       seatColor: (seat) => {
         // odd rows are blue, even rows are red.
         var lastdigit = seat.label.charCodeAt(0);
-        return lastdigit % 2 === 0 ? 'blue' : 'red';
+        return lastdigit % 2 === 0 ? '#f1c40f' : '#e74c3c';
       },
       seatTooltip: (seat) => {
         return 'seat: ' + seat.label ;
