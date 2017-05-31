@@ -8,6 +8,7 @@ import type { SeatData } from '../types';
 import Seat from './Seat';
 import Viewport from '../viewport';
 import { toSeatData } from '../conversions';
+import { FLAT_COLORS } from '../colors';
 
 
 type Props = {
@@ -18,6 +19,7 @@ type Props = {
   onSelectSeat: (seat: SeatData) => void,
   seatColor: (seat: SeatData) => ?string,
   seatTooltip: (seat: SeatData) => ?string,
+  seatText: (seat: SeatData) => ?string,
 
   // Redux props
   showTooltip: (text: string ) => void,
@@ -60,7 +62,6 @@ export default class Floorplan extends React.Component {
         const tooltipText = this.props.seatTooltip(toSeatData(seatstate));
         this.props.showTooltip(tooltipText || seatstate.label);
       };
-
       seat.onMouseLeave = () => this.props.hideTooltip();
       seat.onSelect = () => this.props.onSelectSeat(toSeatData(seatstate));
 
@@ -83,7 +84,8 @@ export default class Floorplan extends React.Component {
     // Use the user defined callback to modify how each seat's should look like.
     this.seats.forEach((seat) => {
       const seatData = toSeatData(this.props.seats[seat.id]);
-      seat.color = this.props.seatColor(seatData);
+      seat.color = this.props.seatColor(seatData) || FLAT_COLORS.POMEGRANATE;
+      seat.text = this.props.seatText(seatData) || '';
     });
 
     // finally, redraw the viewport

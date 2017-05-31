@@ -7,26 +7,26 @@ New floorplan for lanets.ca
 
 Make sure you have [docker](https://www.docker.com/), [docker-compose](https://docs.docker.com/compose/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
 
-To install node dependencies, run :
-```
-$ make node_modules
-```
-
 ## Building
 
-To start the application in dev mode, run:
+To build the Floorplan API and client, run:
 ```
 $ make
 ```
+## Starting the Floorplan API
+To start the Floorplan API, run:
+```
+$ make run-floorplanets
+```
+The API should start listening for requests at [localhost:8080](http://localhost:8080).
 
-The application should be running at : [localhost:3000](http://localhost:3000)
+## Starting the Floorplan client
+To start the Floorplan client in dev mode, run:
+```
+$ make reactapp
+```
+The application should be running at [localhost:3000](http://localhost:3000).
 Dev mode runs the application with a watcher, reloading the app on source code change.
-
-
-To build the application for production, run:
-```
-$ make build
-```
 
 
 ## Running the tests

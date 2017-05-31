@@ -27,5 +27,8 @@ export type FloorplanConfig = {
 
   // callback defining the text to render in the tooltip of a seat
   seatTooltip: (seat: SeatData) => ?string,
+
+  // callback defining the text to render inside the seat.
+  seatText: (seat: SeatData) => ?string,
 };
 
