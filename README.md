@@ -7,11 +7,6 @@ New floorplan for lanets.ca
 
 Make sure you have [docker](https://www.docker.com/), [docker-compose](https://docs.docker.com/compose/) and [Make](https://www.gnu.org/software/make/) installed on your machine.
 
-To install node dependencies, run :
-```
-$ make node_modules
-```
-
 ## Building
 
 To build the Floorplan API and client, run:
