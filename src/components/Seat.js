@@ -10,8 +10,8 @@ export default class Seat {
   id: string;
   item: Group;
   position: Point;
-  shape: Shape;
-  text: PointText;
+  seatShape: Shape;
+  textLabel: PointText;
 
   visible: boolean;
   color: string;
