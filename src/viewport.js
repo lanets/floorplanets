@@ -71,7 +71,11 @@ export default class Viewport {
    */
   _translate(e: MouseEvent) {
     const delta = e.delta;
-    delta.length /= 2;  // reduce velocity of the drag
+
+    // reduce velocity of the drag
+    // Since it's called multiple time per seconds and we need to divide the lenght of the
+    // delta by 2, use shift operator for sick performances
+    delta.length >>= 1;
 
     this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
 
