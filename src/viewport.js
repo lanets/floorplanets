@@ -62,7 +62,7 @@ export default class Viewport {
         this._mainLayer.visible = true;
       }
 
-      this.view.requestUpdate(this.view.update())
+      this.view.update();
     })
   }
 
