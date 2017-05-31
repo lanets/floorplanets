@@ -45,7 +45,7 @@ export default class Floorplan extends React.Component {
 
     // Configure the floorplan
     paper.setup(canvas);
-    this.viewport = new Viewport(paper.view);
+    this.viewport = new Viewport(paper.view, paper.project);
     this.viewport.setZoom(this.props.zoom);
 
     // HARDCODED: center the view for our mocked seats

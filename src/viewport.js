@@ -1,5 +1,5 @@
 //@flow
-import { View, MouseEvent, Point, Layer } from 'paper';
+import { View, MouseEvent, Point, Layer, Project } from 'paper';
 
 
 /**
@@ -15,12 +15,12 @@ export default class Viewport {
   _rasterLayer: Layer;
   _shouldRaster: bool;
 
-  constructor(view: View) {
+  constructor(view: View, project: Project) {
     this.view = view;
     this.view.autoUpdate = false;
 
-    this._mainLayer = view._project.activeLayer;
-    this._rasterLayer = view._project.addLayer(new Layer());
+    this._mainLayer = project.activeLayer;
+    this._rasterLayer = project.addLayer(new Layer());
     this._shouldRaster = false;
 
     this.view.onMouseDrag = (e) => this._translate(e);
