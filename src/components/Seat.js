@@ -11,7 +11,7 @@ export default class Seat {
   item: Group;
   position: Point;
   seatShape: Shape;
-  textLabel: PointText;
+  seatText: PointText;
 
   visible: boolean;
   color: string;
@@ -35,7 +35,7 @@ export default class Seat {
     });
 
     // the text label inside the seat.
-    this.textLabel = new PointText({
+    this.seatText = new PointText({
       point: new Point(x, y + FONTSIZE * 0.5),
       fontSize: FONTSIZE,
       justification: 'center',
@@ -45,7 +45,7 @@ export default class Seat {
 
     this.item = new Group([
       this.seatShape,
-      this.textLabel,
+      this.seatText,
     ])
 
     this.item.onMouseEnter = () => this.onMouseEnter();
@@ -69,10 +69,10 @@ export default class Seat {
     this.item.visible = val;
   }
 
-  get label(): string {
-    return this.textLabel.content;
+  get text(): string {
+    return this.seatText.content;
   }
-  set label(val: string) {
-    this.textLabel.content = val;
+  set text(val: string) {
+    this.seatText.content = val;
   }
 }

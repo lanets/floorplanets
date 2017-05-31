@@ -18,7 +18,7 @@ type Props = {
   onSelectSeat: (seat: SeatData) => void,
   seatColor: (seat: SeatData) => ?string,
   seatTooltip: (seat: SeatData) => ?string,
-  seatLabel: (seat: SeatData) => ?string,
+  seatText: (seat: SeatData) => ?string,
 
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
@@ -146,7 +146,7 @@ export default class Floorplan extends React.Component {
       const seatData = toSeatData(this.props.seats[seat.id]);
 
       seat.color = this.props.seatColor(seatData) || FLAT_COLORS.POMEGRANATE;
-      seat.label = this.props.seatLabel(seatData) || '';
+      seat.text = this.props.seatText(seatData) || '';
     });
   }
 
