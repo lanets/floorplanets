@@ -1,12 +1,11 @@
 //@flow
-
 import { View, MouseEvent, Point, Layer } from 'paper';
 
 
 /**
  * Encapsulate the viewport's logic.
- * Expose methods to easily define how the current floorplan should be shown
- * to the user.
+ * Expose an interface to define how the canvas viewed by this viewport instance
+ * should be shown to the user.
  */
 export default class Viewport {
 
