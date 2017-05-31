@@ -7,6 +7,7 @@ import type { SeatData } from '../types';
 
 import { toSeatData } from '../conversions';
 import Seat from './Seat';
+import { FLAT_COLORS } from '../colors';
 
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
   onSelectSeat: (seat: SeatData) => void,
   seatColor: (seat: SeatData) => ?string,
   seatTooltip: (seat: SeatData) => ?string,
+  seatText: (seat: SeatData) => ?string,
 
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
@@ -70,7 +72,6 @@ export default class Floorplan extends React.Component {
         const tooltipText = this.props.seatTooltip(toSeatData(seatstate));
         this.props.showTooltip(tooltipText || seatstate.label);
       };
-
       seat.onMouseLeave = () => this.props.hideTooltip();
       seat.onSelect = () => this.props.onSelectSeat(toSeatData(seatstate));
 
@@ -144,7 +145,8 @@ export default class Floorplan extends React.Component {
     this.seats.forEach((seat) => {
       const seatData = toSeatData(this.props.seats[seat.id]);
 
-      seat.color = this.props.seatColor(seatData);
+      seat.color = this.props.seatColor(seatData) || FLAT_COLORS.POMEGRANATE;
+      seat.text = this.props.seatText(seatData) || '';
     });
   }
 
