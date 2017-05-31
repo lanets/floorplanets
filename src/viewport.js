@@ -63,7 +63,7 @@ export default class Viewport {
       }
 
       this.view.update();
-    })
+    });
   }
 
   /**
