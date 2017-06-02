@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
-import { paper, Point, Layer } from 'paper';
+import { paper } from 'paper';
 
 import type { SeatsMap } from '../reducers/types';
 import type { SeatData } from '../types';
 
-import { toSeatData } from '../conversions';
 import Seat from './Seat';
+import Viewport from '../viewport';
+import { toSeatData } from '../conversions';
 import { FLAT_COLORS } from '../colors';
 
 
@@ -20,25 +21,20 @@ type Props = {
   seatTooltip: (seat: SeatData) => ?string,
   seatText: (seat: SeatData) => ?string,
 
+  // Redux props
   showTooltip: (text: string ) => void,
   hideTooltip: () => void,
 }
 
+/**
+ * Component rendering a HTML5 Canvas Element containing a Floorplan.
+ */
 export default class Floorplan extends React.Component {
 
   props: Props;
-  view: paper.view;
-  rasterLayer: Layer;
-  seatsLayer: Layer;
+  viewport: Viewport;
 
-  shouldRaster: bool;
   seats: Seat[];
-  update: () => void;
-
-  constructor(props: Props) {
-    super(props);
-    this.update = this.update.bind(this);
-  }
 
   componentDidMount() {
     const canvas = this.refs.canvas;
@@ -49,17 +45,11 @@ export default class Floorplan extends React.Component {
 
     // Configure the floorplan
     paper.setup(canvas);
-    this.view = paper.view;
-    this.view.autoUpdate = false;
-    this.view.zoom = this.props.zoom;
-    this.view.onMouseDrag = (e) => this.onMouseDrag(e);
-    this.view.onMouseUp = (e) => this.onMouseUp(e);
-
-    this.seatsLayer = paper.project.activeLayer;
-    this.rasterLayer = paper.project.addLayer(new Layer());
+    this.viewport = new Viewport(paper.view, paper.project);
+    this.viewport.setZoom(this.props.zoom);
 
     // HARDCODED: center the view for our mocked seats
-    this.view.center = new Point(1175, 371);
+    this.viewport.setCenter(1175, 371);
 
     // Create and render the seats based on the loaded floorplan.
     this.seats = [];
@@ -81,73 +71,25 @@ export default class Floorplan extends React.Component {
     this.update();
   }
 
-  /**
-   *
-   * Called when the stores the floorplan is subscribed to is updated.
-   */
   componentDidUpdate() {
-    this.view.zoom = this.props.zoom;
     this.update();
   }
 
   /**
-   * Called when the user drags the floorplan around.
+   * Update the floorplan's seat and redraw the viewport.
    */
-  onMouseDrag(e: Object) {
-    const delta = e.delta;
-
-    // reduce drag length
-    delta.length /= 2;
-
-    // inverts the scroll from the drag direction
-    this.view.center = this.view.center.add(new Point(-delta.x, -delta.y));
-
-    // When dragging the floorplan, raster the viewport for insane performances.
-    this.shouldRaster = true;
-
-    this.update();
-  }
-
-  /**
-   * Called when the user is done dragging the floorplan
-   */
-  onMouseUp(e: Object) {
-    this.shouldRaster = false;
-    this.update();
-  }
-
   update() {
-    if (this.shouldRaster) {
-      if(this.rasterLayer.isEmpty())
-        this.rasterLayer.addChild(this.seatsLayer.rasterize());
+    this.viewport.setZoom(this.props.zoom);
 
-      // hide the seats layer and activate the raster layer.
-      this.seatsLayer.visible = false;
-      this.rasterLayer.visible = true;
-    } else {
-      // hide the raster layer and activate the seats layer.
-      this.rasterLayer.visible = false;
-      this.seatsLayer.visible = true;
-
-      this.updateSeats();
-    }
-
-    // reset the raster flag and redraw the floorplan.
-    this.shouldRaster = false;
-    this.view.requestUpdate(this.view.update())
-  }
-
-  /**
-   * Update each seats based on the callback properties of the configuration provided
-   * by the user.
-   */
-  updateSeats() {
+    // Use the user defined callback to modify how each seat's should look like.
     this.seats.forEach((seat) => {
       const seatData = toSeatData(this.props.seats[seat.id]);
-
       seat.color = this.props.seatColor(seatData) || FLAT_COLORS.POMEGRANATE;
       seat.text = this.props.seatText(seatData) || '';
     });
+
+    // finally, redraw the viewport
+    this.viewport.redraw();
   }
 
   render() {
