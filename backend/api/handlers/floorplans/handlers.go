@@ -22,6 +22,18 @@ func floorplansGetHandler() http.Handler {
 	return http.HandlerFunc(handler)
 }
 
+func floorplansPostHandler() http.Handler {
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+
+		w.WriteHeader(http.StatusCreated)
+	}
+
+	handler = decorators.JsonHeaders(handler)
+
+	return http.HandlerFunc(handler)
+}
+
 func floorplanGetHandler() http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {

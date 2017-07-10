@@ -20,6 +20,24 @@
   revision = "4c1c3952b7d9d0a061a3fa7b36fd373ba0398ebc"
 
 [[projects]]
+  name = "github.com/jinzhu/gorm"
+  packages = [".","dialects/sqlite"]
+  revision = "5174cc5c242a728b435ea2be8a2f7f998e15429b"
+  version = "v1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  revision = "1c35d901db3da928c72a72d8458480cc9ade058f"
+
+[[projects]]
+  name = "github.com/mattn/go-sqlite3"
+  packages = ["."]
+  revision = "ca5e3819723d8eeaf170ad510e7da1d6d2e94a08"
+  version = "v1.2.0"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -31,9 +49,15 @@
   packages = ["assert"]
   revision = "4d4bfba8f1d1027c4fdbe371823030df51419987"
 
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "054b33e6527139ad5b1ec2f6232c3b175bd9a30c"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c9bcba7770032ffef4044978f4dc37cf23d14a24fb4e7d6433c6a8e7ef442e4a"
+  inputs-digest = "b2cb0d6fd0d08a800f25361bd3b608da86c6f46707ae42ad472b5cf140e78e00"
   solver-name = "gps-cdcl"
   solver-version = 1
