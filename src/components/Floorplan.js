@@ -58,12 +58,9 @@ export default class Floorplan extends React.Component {
       const seat = new Seat(id, seatstate.x, seatstate.y);
 
       // events binding
-      seat.onMouseEnter = () => {
-        const tooltipText = this.props.seatTooltip(toSeatData(seatstate));
-        this.props.showTooltip(tooltipText || seatstate.label);
-      };
-      seat.onMouseLeave = () => this.props.hideTooltip();
-      seat.onSelect = () => this.props.onSelectSeat(toSeatData(seatstate));
+      seat.onMouseEnter = () => this.onSeatHover(id);
+      seat.onMouseLeave = () => this.onSeatBlur();
+      seat.onSelect = () => this.selectSeat(id);
 
       this.seats.push(seat);
     }
@@ -73,6 +70,21 @@ export default class Floorplan extends React.Component {
 
   componentDidUpdate() {
     this.update();
+  }
+
+  onSeatHover(id: string) {
+    const seatstate = this.props.seats[id];
+    const tooltipText = this.props.seatTooltip(toSeatData(seatstate));
+    this.props.showTooltip(tooltipText || seatstate.label);
+  }
+
+  onSeatBlur() {
+    this.props.hideTooltip();
+  }
+
+  selectSeat(id: string) {
+    const seatstate = this.props.seats[id];
+    this.props.onSelectSeat(toSeatData(seatstate));
   }
 
   /**
