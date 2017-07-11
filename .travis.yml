@@ -6,6 +6,7 @@ install:
     - make node_modules
 
 script:
+    - echo $HOME
     - make test
 
 notifications:
