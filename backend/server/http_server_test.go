@@ -22,7 +22,7 @@ func getFreePort() int {
 func TestStartStopServer(t *testing.T) {
 	port := getFreePort()
 
-	s, _ := server.NewFloorplanetsServer(fmt.Sprintf(":%d", port))
+	s, _ := server.NewHttpServer(fmt.Sprintf(":%d", port))
 
 	// Something should be listening on this port
 	_, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
