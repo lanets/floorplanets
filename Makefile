@@ -68,7 +68,7 @@ vendor: .golang-build-image Gopkg.lock Gopkg.toml
 
 FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
 floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES) vendor
-	$(docker_run_go) bash -c 'go build $$(go list ./... | grep -v "/vendor/") && go build github.com/lanets/floorplanets/backend/cmd/floorplanets'
+	$(docker_run_go) bash -c 'go build -v $$(go list ./... | grep -v "/vendor/") && go build -v github.com/lanets/floorplanets/backend/cmd/floorplanets'
 
 .PHONY: gofmt
 gofmt: .golang-build-image

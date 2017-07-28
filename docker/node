@@ -1,6 +1,12 @@
-FROM node:7
+FROM node:8
 
 ARG userid
+
+RUN useradd -u "$userid" floorplanets || echo user already exists
+
+RUN mkdir /home/floorplanets
+
+RUN chown -R $userid /home/floorplanets
 
 RUN apt-get update -qy && \
     apt-get install -y \
