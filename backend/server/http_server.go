@@ -19,17 +19,21 @@ func NewHttpServer(address string) (*HttpServer, error) {
 	// Create the logged handler
 	loggedHandler := logHandler(router)
 
-	// Create an http server with the logged handler
-	httpServer := &http.Server{Handler: loggedHandler}
-
 	// Listen on the given address
 	listener, err := net.Listen("tcp", address)
-
 	if err != nil {
 		return nil, err
 	}
 
-	server := HttpServer{httpServer: httpServer, listener: listener}
+	// Create an http server with the logged handler
+	httpServer := &http.Server{
+		Handler: loggedHandler,
+	}
+
+	server := HttpServer{
+		httpServer: httpServer,
+		listener:   listener,
+	}
 
 	go httpServer.Serve(listener)
 

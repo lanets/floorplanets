@@ -96,6 +96,7 @@ clean:
 	rm -rf flow-typed
 	rm -rf build
 	rm -rf vendor
+	rm -rf database.sqlite
 
 .PHONY: mrproper
 mrproper: clean

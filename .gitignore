@@ -14,6 +14,9 @@
 # production
 /build
 
+# things created by the floorplanets binary
+database.sqlite
+
 # misc
 .DS_Store
 .env
