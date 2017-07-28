@@ -6,7 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/lanets/floorplanets/backend/api"
+	"github.com/lanets/floorplanets/backend/server/http/api"
 )
 
 type ApiTest struct {
@@ -14,12 +14,12 @@ type ApiTest struct {
 }
 
 func NewApiTest() *ApiTest {
-	return &ApiTest{api.NewRouter()}
+	return &ApiTest{api.NewRouter(nil)}
 }
 
 func (apitest *ApiTest) ServeHTTP(*http.Request) *httptest.ResponseRecorder {
 	req, _ := http.NewRequest("GET", "/lanets/", nil)
 	res := httptest.NewRecorder()
-	api.NewRouter().ServeHTTP(res, req)
+	api.NewRouter(nil).ServeHTTP(res, req)
 	return res
 }

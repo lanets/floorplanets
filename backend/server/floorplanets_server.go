@@ -5,35 +5,35 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
-	"github.com/lanets/floorplanets/backend/models"
+	"github.com/lanets/floorplanets/backend/server/internal/models"
+	"github.com/lanets/floorplanets/backend/server/http"
 )
 
 type FloorplanetsServer struct {
-	httpServer *HttpServer
+	httpServer *http.HttpServer
 	database   *gorm.DB
 }
 
 func NewFloorplanetsServer(address string) (*FloorplanetsServer, error) {
+	s := FloorplanetsServer{}
+
 	database, err := setupDatabase()
 	if err != nil {
 		return nil, err
 	}
+	s.database = database
 
-	httpServer, err := setupHttpServer(address, database)
+	httpServer, err := setupHttpServer(&s, address)
 	if err != nil {
 		return nil, err
 	}
-
-	s := FloorplanetsServer{
-		httpServer: httpServer,
-		database:   database,
-	}
+	s.httpServer = httpServer
 
 	return &s, nil
 }
 
-func setupHttpServer(address string, database *gorm.DB) (*HttpServer, error) {
-	httpServer, err := NewHttpServer(address)
+func setupHttpServer(server *FloorplanetsServer, address string) (*http.HttpServer, error) {
+	httpServer, err := http.NewHttpServer(server, address)
 	if err != nil {
 		return nil, err
 	}
@@ -51,6 +51,10 @@ func setupDatabase() (*gorm.DB, error) {
 	database.AutoMigrate(&models.Floorplan{})
 
 	return database, nil
+}
+
+func (s *FloorplanetsServer) Database() *gorm.DB {
+	return s.database
 }
 
 func (s *FloorplanetsServer) Close() error {

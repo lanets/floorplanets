@@ -1,10 +1,11 @@
-package server
+package http
 
 import (
 	"net"
 	"net/http"
 
-	"github.com/lanets/floorplanets/backend/api"
+	"github.com/lanets/floorplanets/backend/server/http/api"
+	"github.com/lanets/floorplanets/backend/server/http/api/server"
 )
 
 type HttpServer struct {
@@ -12,9 +13,9 @@ type HttpServer struct {
 	listener   net.Listener
 }
 
-func NewHttpServer(address string) (*HttpServer, error) {
+func NewHttpServer(apiServer server.APIServer, address string) (*HttpServer, error) {
 	// Create a router
-	router := api.NewRouter()
+	router := api.NewRouter(apiServer)
 
 	// Create the logged handler
 	loggedHandler := logHandler(router)
