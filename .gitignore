@@ -24,3 +24,4 @@ yarn-error.log*
 
 # golang
 /vendor
+/.pkg
