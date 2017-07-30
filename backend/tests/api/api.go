@@ -17,8 +17,7 @@ func NewApiTest() *ApiTest {
 	return &ApiTest{api.NewRouter(nil)}
 }
 
-func (apitest *ApiTest) ServeHTTP(*http.Request) *httptest.ResponseRecorder {
-	req, _ := http.NewRequest("GET", "/lanets/", nil)
+func (apitest *ApiTest) ServeHTTP(req *http.Request) *httptest.ResponseRecorder {
 	res := httptest.NewRecorder()
 	api.NewRouter(nil).ServeHTTP(res, req)
 	return res
