@@ -10,7 +10,7 @@ ifeq ($(FLOORPLANETS_PORT),)
 endif
 
 docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER)
-docker_run_go = docker run --rm -t -v $$(pwd):/go/src/github.com/lanets/floorplanets -w /go/src/github.com/lanets/floorplanets -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER) floorplan-golang
+docker_run_go = docker run --rm -t -v $$(pwd)/.pkg:/go/pkg -v $$(pwd):/go/src/github.com/lanets/floorplanets -w /go/src/github.com/lanets/floorplanets -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER) floorplan-golang
 
 #######################
 ## FRONT-END TARGETS ##
@@ -58,7 +58,15 @@ nodetest-CI: node_modules .node-build-image eslint flow
 run-floorplanets: floorplanets
 	docker-compose -f docker-compose.floorplanets.yml up
 
-.golang-build-image: docker/golang Makefile
+# This directory contains the installed golang packages.
+.pkg:
+	rm -rf .pkg
+	mkdir .pkg
+
+# The filter-out and wildcard magic here does the following: depend on .pkg
+# only if does not exist. This is the equivalent of depending on .pkg, but
+# ignoring the timestamp.
+.golang-build-image: docker/golang Makefile $(filter-out $(wildcard .pkg), .pkg)
 	docker build --build-arg userid=$$(id -u) -f docker/golang -t floorplan-golang docker
 	touch .golang-build-image
 
@@ -68,7 +76,11 @@ vendor: .golang-build-image Gopkg.lock Gopkg.toml
 
 FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
 floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES) vendor
-	$(docker_run_go) bash -c 'go build -v $$(go list ./... | grep -v "/vendor/") && go build -v github.com/lanets/floorplanets/backend/cmd/floorplanets'
+	$(docker_run_go) bash -c 'go install -v github.com/lanets/floorplanets/backend/cmd/floorplanets'
+
+.PHONY: goinstall
+goinstall: .golang-build-image
+	$(docker_run_go) bash -c 'go install $$(go list ./... | grep -v "/vendor/")'
 
 .PHONY: gofmt
 gofmt: .golang-build-image
@@ -97,6 +109,7 @@ clean:
 	rm -rf build
 	rm -rf vendor
 	rm -rf database.sqlite
+	rm -rf .pkg
 
 .PHONY: mrproper
 mrproper: clean

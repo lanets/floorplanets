@@ -4,8 +4,9 @@ ARG userid
 
 RUN useradd -u "$userid" floorplanets
 
+RUN mkdir /go/pkg
 RUN mkdir /go/src/github.com
-RUN chmod 777 /go/src/github.com
+RUN chown -R floorplanets /go
 
 USER floorplanets
 
