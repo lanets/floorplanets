@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/lanets/floorplanets/backend/cmd/floorplanets/cli"
+	"github.com/lanets/floorplanets/backend/cmd/floorplanets/internal/cli"
 )
 
 func TestHelp(t *testing.T) {
