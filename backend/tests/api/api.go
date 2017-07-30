@@ -10,15 +10,17 @@ import (
 )
 
 type ApiTest struct {
-	*mux.Router
+	router *mux.Router
 }
 
 func NewApiTest() *ApiTest {
-	return &ApiTest{api.NewRouter(nil)}
+	return &ApiTest{
+		router: api.NewRouter(nil),
+	}
 }
 
 func (apitest *ApiTest) ServeHTTP(req *http.Request) *httptest.ResponseRecorder {
 	res := httptest.NewRecorder()
-	api.NewRouter(nil).ServeHTTP(res, req)
+	apitest.router.ServeHTTP(res, req)
 	return res
 }
