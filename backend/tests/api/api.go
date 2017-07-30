@@ -33,8 +33,9 @@ func NewApiTest(t *testing.T) *ApiTest {
 	// Setup the app
 	application := app.NewApp(database)
 
+	// Create the ApiTest
 	apiTest := ApiTest{
-		router:       api.NewRouter(nil),
+		router:       api.NewRouter(application),
 		databaseFile: databaseFile,
 		app:          application,
 	}

@@ -78,10 +78,6 @@ FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
 floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES) vendor
 	$(docker_run_go) bash -c 'go install -v github.com/lanets/floorplanets/backend/cmd/floorplanets'
 
-.PHONY: goinstall
-goinstall: .golang-build-image
-	$(docker_run_go) bash -c 'go install $$(go list ./... | grep -v "/vendor/")'
-
 .PHONY: gofmt
 gofmt: .golang-build-image
 	$(docker_run_go) bash -c 'go fmt $$(go list ./... | grep -v "/vendor/")'
