@@ -45,8 +45,7 @@ func setupDatabase() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	// Migrate the schema
-	database.AutoMigrate(&models.Floorplan{})
+	models.RunMigrations(database)
 
 	return database, nil
 }
