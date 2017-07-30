@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/lanets/floorplanets/backend/cmd/floorplanets/cli"
+	"github.com/lanets/floorplanets/backend/cmd/floorplanets/internal/cli"
 )
 
 func main() {
