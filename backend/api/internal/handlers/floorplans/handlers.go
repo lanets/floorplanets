@@ -7,8 +7,8 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/lanets/floorplanets/backend/app"
 	"github.com/lanets/floorplanets/backend/api/internal/handlers/decorators"
+	"github.com/lanets/floorplanets/backend/app"
 )
 
 func floorplansGetHandler(app *app.App) http.Handler {

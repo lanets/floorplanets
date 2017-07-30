@@ -4,9 +4,9 @@ package api
 import (
 	"github.com/gorilla/mux"
 
-	"github.com/lanets/floorplanets/backend/app"
 	floorplans_handlers "github.com/lanets/floorplanets/backend/api/internal/handlers/floorplans"
 	lanets_handlers "github.com/lanets/floorplanets/backend/api/internal/handlers/lanets"
+	"github.com/lanets/floorplanets/backend/app"
 )
 
 //NewRouter creates the main router

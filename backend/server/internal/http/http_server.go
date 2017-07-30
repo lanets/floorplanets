@@ -4,8 +4,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/lanets/floorplanets/backend/app"
 	"github.com/lanets/floorplanets/backend/api"
+	"github.com/lanets/floorplanets/backend/app"
 )
 
 type HttpServer struct {

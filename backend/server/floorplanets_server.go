@@ -23,9 +23,9 @@ func NewFloorplanetsServer(address string) (*FloorplanetsServer, error) {
 		return nil, err
 	}
 
-	app := app.NewApp(database)
+	application := app.NewApp(database)
 
-	httpServer, err := http.NewHttpServer(app, address)
+	httpServer, err := http.NewHttpServer(application, address)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func NewFloorplanetsServer(address string) (*FloorplanetsServer, error) {
 	floorplanetsServer := FloorplanetsServer{
 		httpServer: httpServer,
 		database:   database,
-		app:        app,
+		app:        application,
 	}
 
 	return &floorplanetsServer, nil
