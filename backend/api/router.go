@@ -1,27 +1,28 @@
+// Package api provides a router that calls app actions
 package api
 
 import (
 	"github.com/gorilla/mux"
 
-	"github.com/lanets/floorplanets/backend/server/http/api/server"
-	floorplans_handlers "github.com/lanets/floorplanets/backend/server/http/api/handlers/floorplans"
-	lanets_handlers "github.com/lanets/floorplanets/backend/server/http/api/handlers/lanets"
+	"github.com/lanets/floorplanets/backend/app"
+	floorplans_handlers "github.com/lanets/floorplanets/backend/api/internal/handlers/floorplans"
+	lanets_handlers "github.com/lanets/floorplanets/backend/api/internal/handlers/lanets"
 )
 
 //NewRouter creates the main router
-func NewRouter(server server.APIServer) *mux.Router {
+func NewRouter(app *app.App) *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
 
 	//Register routes for: /lanets
 	lanets_handlers.RegisterRoutes(
-		server,
+		app,
 		router.PathPrefix("/lanets").Subrouter(),
 	)
 
 	//Register routes for: /floorplan
 	floorplans_handlers.RegisterRoutes(
-		server,
+		app,
 		router.PathPrefix("/floorplans").Subrouter(),
 	)
 

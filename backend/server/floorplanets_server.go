@@ -1,44 +1,42 @@
-// Package server encapsulates operations on the http server
+// Package server contains the core of the flooplanets server
 package server
 
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
-	"github.com/lanets/floorplanets/backend/server/internal/models"
-	"github.com/lanets/floorplanets/backend/server/http"
+	"github.com/lanets/floorplanets/backend/app"
+	"github.com/lanets/floorplanets/backend/models"
+	"github.com/lanets/floorplanets/backend/server/internal/http"
 )
 
 type FloorplanetsServer struct {
 	httpServer *http.HttpServer
 	database   *gorm.DB
+	app        *app.App
 }
 
 func NewFloorplanetsServer(address string) (*FloorplanetsServer, error) {
-	s := FloorplanetsServer{}
 
 	database, err := setupDatabase()
 	if err != nil {
 		return nil, err
 	}
-	s.database = database
 
-	httpServer, err := setupHttpServer(&s, address)
-	if err != nil {
-		return nil, err
-	}
-	s.httpServer = httpServer
+	app := app.NewApp(database)
 
-	return &s, nil
-}
-
-func setupHttpServer(server *FloorplanetsServer, address string) (*http.HttpServer, error) {
-	httpServer, err := http.NewHttpServer(server, address)
+	httpServer, err := http.NewHttpServer(app, address)
 	if err != nil {
 		return nil, err
 	}
 
-	return httpServer, nil
+	floorplanetsServer := FloorplanetsServer{
+		httpServer: httpServer,
+		database:   database,
+		app:        app,
+	}
+
+	return &floorplanetsServer, nil
 }
 
 func setupDatabase() (*gorm.DB, error) {

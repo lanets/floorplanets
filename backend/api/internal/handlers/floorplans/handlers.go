@@ -7,11 +7,11 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/lanets/floorplanets/backend/server/http/api/handlers/decorators"
-	"github.com/lanets/floorplanets/backend/server/http/api/server"
+	"github.com/lanets/floorplanets/backend/app"
+	"github.com/lanets/floorplanets/backend/api/internal/handlers/decorators"
 )
 
-func floorplansGetHandler(server server.APIServer) http.Handler {
+func floorplansGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		// Bogus response for now :)
@@ -23,7 +23,7 @@ func floorplansGetHandler(server server.APIServer) http.Handler {
 	return http.HandlerFunc(handler)
 }
 
-func floorplansPostHandler(server server.APIServer) http.Handler {
+func floorplansPostHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 
@@ -35,7 +35,7 @@ func floorplansPostHandler(server server.APIServer) http.Handler {
 	return http.HandlerFunc(handler)
 }
 
-func floorplanGetHandler(server server.APIServer) http.Handler {
+func floorplanGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)

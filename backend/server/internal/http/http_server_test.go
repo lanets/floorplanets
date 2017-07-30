@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/lanets/floorplanets/backend/server"
+	"github.com/lanets/floorplanets/backend/server/internal/http"
 )
 
 func getFreePort() int {
@@ -22,7 +22,7 @@ func getFreePort() int {
 func TestStartStopServer(t *testing.T) {
 	port := getFreePort()
 
-	s, _ := server.NewHttpServer(fmt.Sprintf(":%d", port))
+	s, _ := http.NewHttpServer(nil, fmt.Sprintf(":%d", port))
 
 	// Something should be listening on this port
 	_, err := net.Listen("tcp", fmt.Sprintf(":%d", port))

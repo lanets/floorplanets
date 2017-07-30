@@ -6,7 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/lanets/floorplanets/backend/server/http/api"
+	"github.com/lanets/floorplanets/backend/api"
 )
 
 type ApiTest struct {
