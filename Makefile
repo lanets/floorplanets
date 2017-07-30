@@ -72,7 +72,7 @@ run-floorplanets: floorplanets
 
 vendor: .golang-build-image Gopkg.lock Gopkg.toml
 	rm -rf vendor
-	$(docker_run_go) dep ensure
+	$(docker_run_go) dep ensure -v
 
 FLOORPLANETS_SOURCES := $(shell find backend -name '*.go') Makefile
 floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES) vendor
