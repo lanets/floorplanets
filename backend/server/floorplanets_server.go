@@ -1,9 +1,6 @@
 // Package server encapsulates operations on the http server
 package server
 
-import (
-)
-
 type FloorplanetsServer struct {
 	httpServer *HttpServer
 }
