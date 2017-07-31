@@ -21,7 +21,7 @@ type seatJson struct {
 	Y     int    `json:"label,omitempty"`
 }
 
-func (seat *Seat) ToSeatJson() seatJson {
+func (seat *Seat) toSeatJson() seatJson {
 	seatJson := seatJson{
 		ID:    seat.ID,
 		Label: seat.Label,
@@ -32,7 +32,7 @@ func (seat *Seat) ToSeatJson() seatJson {
 }
 
 func (seat *Seat) ToJson() string {
-	b, err := json.Marshal(seat.ToSeatJson())
+	b, err := json.Marshal(seat.toSeatJson())
 	if err != nil {
 		return ""
 	}
