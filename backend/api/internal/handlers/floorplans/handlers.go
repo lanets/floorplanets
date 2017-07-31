@@ -34,14 +34,18 @@ func floorplansGetHandler(app *app.App) http.Handler {
 func floorplansPostHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		name := r.FormValue("name")
 
-		err := app.CreateFloorplan(name)
+		// Read the body
+		postedFloorplan := models.FloorplanFromJson(r.Body)
+
+		floorplan, err := app.CreateFloorplan(postedFloorplan.Name)
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
+		fmt.Fprint(w, floorplan.ToJson())
 
 		w.WriteHeader(http.StatusCreated)
 

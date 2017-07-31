@@ -4,8 +4,17 @@ import (
 	"github.com/lanets/floorplanets/backend/models"
 )
 
-func (app *App) CreateFloorplan(name string) error {
-	return app.Database.Create(&models.Floorplan{Name: name}).Error
+func (app *App) CreateFloorplan(name string) (*models.Floorplan, error) {
+	floorplan := &models.Floorplan{
+		Name: name,
+	}
+
+	err := app.Database.Create(floorplan).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return floorplan, nil
 }
 
 func (app *App) GetFloorplan(id int) (*models.Floorplan, error) {
@@ -27,5 +36,4 @@ func (app *App) GetAllFloorplansNameId() ([]models.Floorplan, error) {
 	}
 
 	return floorplans, nil
-
 }

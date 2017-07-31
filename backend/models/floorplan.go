@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"io"
 
 	"github.com/jinzhu/gorm"
 )
@@ -32,6 +33,16 @@ func (floorplan *Floorplan) ToJson() string {
 	}
 
 	return string(b)
+}
+
+func FloorplanFromJson(data io.Reader) *Floorplan {
+	decoder := json.NewDecoder(data)
+	var f Floorplan
+	err := decoder.Decode(&f)
+	if err == nil {
+		return &f
+	}
+	return nil
 }
 
 func FloorplanListToJson(floorplans []Floorplan) string {

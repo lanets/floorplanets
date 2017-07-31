@@ -2,6 +2,7 @@ package floorplans_test
 
 import (
 	"net/http"
+	"strings"
 	"testing"
 
 	api_test "github.com/lanets/floorplanets/backend/tests/api"
@@ -61,4 +62,24 @@ func TestFloorplanGetHandlerNotFound(t *testing.T) {
 	if statusCode != http.StatusNotFound {
 		t.Errorf("the status code should be 404, got `%d`", statusCode)
 	}
+}
+
+func TestFloorplansPostHandler(t *testing.T) {
+	apitest := api_test.NewApiTest(t)
+	defer apitest.Close()
+
+	request, _ := http.NewRequest(
+		http.MethodPost,
+		"/floorplans/",
+		strings.NewReader(`{"name":"createdFloorplan"}`),
+	)
+	response := apitest.ServeHTTP(request)
+
+	expected := `{"id":1,"name":"createdFloorplan"}`
+	result := response.Body.String()
+
+	if result != expected {
+		t.Errorf("Got `%s`, expected `%s`", result, expected)
+	}
+
 }
