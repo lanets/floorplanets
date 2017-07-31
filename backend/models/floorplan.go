@@ -35,9 +35,9 @@ func (floorplan *Floorplan) ToJson() string {
 	return string(b)
 }
 
-func FloorplanFromJson(data io.Reader) *Floorplan {
+func FloorplanFromJson(data io.Reader) *floorplanJson {
 	decoder := json.NewDecoder(data)
-	var f Floorplan
+	var f floorplanJson
 	err := decoder.Decode(&f)
 	if err == nil {
 		return &f
