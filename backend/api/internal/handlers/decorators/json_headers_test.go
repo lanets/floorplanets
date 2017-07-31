@@ -1,10 +1,10 @@
 package decorators_test
 
 import (
-	"testing"
-
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"testing"
 
 	"github.com/lanets/floorplanets/backend/api/internal/handlers/decorators"
 )
@@ -12,6 +12,7 @@ import (
 func TestJsonHeaders(t *testing.T) {
 	// Create an empty handler
 	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"hello": "world"}`)
 	}
 	handler := http.HandlerFunc(handlerFunc)
 
@@ -21,8 +22,8 @@ func TestJsonHeaders(t *testing.T) {
 	handler.ServeHTTP(responseRecorder, request)
 
 	contentType := responseRecorder.Result().Header.Get("Content-Type")
-	if contentType != "" {
-		t.Error("Content-Type should not be set", contentType)
+	if contentType == "application/json" {
+		t.Error("Content-Type should not be application/json yet")
 	}
 
 	// Decoreate the handler
