@@ -12,7 +12,7 @@ func TestFloorplansGetHandler(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
 	defer apitest.Close()
 
-	apitest.App.CreateFloorplan("floorplan1")
+	apitest.App().CreateFloorplan("floorplan1")
 
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/", nil)
 	response := apitest.ServeHTTP(request)
@@ -29,7 +29,7 @@ func TestFloorplanGetHandler(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
 	defer apitest.Close()
 
-	apitest.App.CreateFloorplan("floorplan1")
+	apitest.App().CreateFloorplan("floorplan1")
 
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/1", nil)
 	response := apitest.ServeHTTP(request)

@@ -3,66 +3,44 @@ package api
 import (
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
 	"github.com/lanets/floorplanets/backend/api"
 	"github.com/lanets/floorplanets/backend/app"
-	"github.com/lanets/floorplanets/backend/models"
+	test_app "github.com/lanets/floorplanets/backend/tests/app"
 )
 
 type ApiTest struct {
-	router       *mux.Router
-	App          *app.App
-	databaseFile string
-	t            *testing.T
+	router  *mux.Router
+	testApp *test_app.TestApp
+	t       *testing.T
 }
 
 func NewApiTest(t *testing.T) *ApiTest {
-	// Setup the database
-	databaseFile := "testdb.sqlite"
-	database, err := setupDatabase(databaseFile)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// Setup the app
-	application := app.NewApp(database)
+	testApp := test_app.NewTestApp(t)
 
 	// Create the ApiTest
 	apiTest := ApiTest{
-		router:       api.NewRouter(application),
-		databaseFile: databaseFile,
-		App:          application,
+		router:  api.NewRouter(testApp.App),
+		testApp: testApp,
+		t:       t,
 	}
 
 	return &apiTest
 }
 
-func setupDatabase(databaseFile string) (*gorm.DB, error) {
-	database, err := gorm.Open("sqlite3", databaseFile)
-	if err != nil {
-		return nil, err
-	}
-
-	models.RunMigrations(database)
-
-	return database, nil
-}
-
-func (apitest *ApiTest) ServeHTTP(req *http.Request) *httptest.ResponseRecorder {
+func (apiTest *ApiTest) ServeHTTP(req *http.Request) *httptest.ResponseRecorder {
 	res := httptest.NewRecorder()
-	apitest.router.ServeHTTP(res, req)
+	apiTest.router.ServeHTTP(res, req)
 	return res
 }
 
-func (apitest *ApiTest) Close() {
-	err := os.Remove(apitest.databaseFile)
-	if err != nil {
-		apitest.t.Fatal(err)
-	}
+func (apiTest *ApiTest) Close() {
+	apiTest.testApp.Close()
+}
+
+func (apiTest *ApiTest) App() *app.App{
+	return apiTest.testApp.App
 }
