@@ -82,4 +82,31 @@ func TestFloorplansPostHandler(t *testing.T) {
 		t.Errorf("Got `%s`, expected `%s`", result, expected)
 	}
 
+	statusCode := response.Result().StatusCode
+	if statusCode != http.StatusCreated {
+		t.Errorf("the status code should be 201, got `%d`", statusCode)
+	}
+
+}
+
+func TestFloorplansPostHandlerBadInput(t *testing.T) {
+	apitest := api_test.NewApiTest(t)
+	defer apitest.Close()
+
+	request, _ := http.NewRequest(
+		http.MethodPost,
+		"/floorplans/",
+		strings.NewReader(`Hello :) {::::}`),
+	)
+	response := apitest.ServeHTTP(request)
+
+	result := response.Body.String()
+	if result != "" {
+		t.Errorf("Got `%s`, expected empty body", result)
+	}
+
+	statusCode := response.Result().StatusCode
+	if statusCode != http.StatusBadRequest {
+		t.Errorf("the status code should be 400, got `%d`", statusCode)
+	}
 }

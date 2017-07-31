@@ -35,7 +35,11 @@ func floorplansPostHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 
-		postedFloorplan := models.FloorplanFromJson(r.Body)
+		postedFloorplan, err := models.FloorplanFromJson(r.Body)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		floorplan, err := app.CreateFloorplan(postedFloorplan.Name)
 
@@ -44,9 +48,9 @@ func floorplansPostHandler(app *app.App) http.Handler {
 			return
 		}
 
-		fmt.Fprint(w, floorplan.ToJson())
-
 		w.WriteHeader(http.StatusCreated)
+
+		fmt.Fprint(w, floorplan.ToJson())
 
 	}
 

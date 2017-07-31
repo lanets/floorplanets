@@ -12,7 +12,6 @@ type Floorplan struct {
 	Name string
 }
 
-// floorplanJson is used to serialize and deserialize Floorplan
 type floorplanJson struct {
 	ID   uint   `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
@@ -35,14 +34,14 @@ func (floorplan *Floorplan) ToJson() string {
 	return string(b)
 }
 
-func FloorplanFromJson(data io.Reader) *floorplanJson {
+func FloorplanFromJson(data io.Reader) (*floorplanJson, error) {
 	decoder := json.NewDecoder(data)
 	var f floorplanJson
 	err := decoder.Decode(&f)
-	if err == nil {
-		return &f
+	if err != nil {
+		return nil, err
 	}
-	return nil
+	return &f, err
 }
 
 func FloorplanListToJson(floorplans []Floorplan) string {
