@@ -84,7 +84,7 @@ gofmt: .golang-build-image
 
 .PHONY: gotest
 gotest: .golang-build-image vendor
-	$(docker_run_go) bash -c 'go test -v $$(go list ./... | grep -v "/vendor/")'
+	$(docker_run_go) bash -c 'go install -v $$(go list ./... | grep -v "/vendor/") && go test -v $$(go list ./... | grep -v "/vendor/")'
 
 
 #####################
