@@ -45,7 +45,7 @@ func FloorplanFromJson(data io.Reader) (*floorplanJson, error) {
 }
 
 func FloorplanListToJson(floorplans []Floorplan) string {
-	var floorplanJsons []floorplanJson
+	floorplanJsons := make([]floorplanJson, 0)
 
 	for _, floorplan := range floorplans {
 		floorplanJsons = append(floorplanJsons, floorplan.ToFloorplanJson())
