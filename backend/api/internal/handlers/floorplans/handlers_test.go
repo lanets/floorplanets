@@ -5,6 +5,8 @@ import (
 	"strings"
 	"testing"
 
+    "github.com/stretchr/testify/assert"
+
 	api_test "github.com/lanets/floorplanets/backend/tests/api"
 )
 
@@ -15,17 +17,8 @@ func TestFloorplansGetHandler(t *testing.T) {
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/", nil)
 	response := apitest.ServeHTTP(request)
 
-	expected := `[]`
-	result := response.Body.String()
-
-	if result != expected {
-		t.Errorf("Got %s, expected %s", result, expected)
-	}
-
-	statusCode := response.Result().StatusCode
-	if statusCode != http.StatusOK {
-		t.Errorf("the status code should be 200, got %d", statusCode)
-	}
+	assert.Equal(t, "[]", response.Body.String())
+	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
 }
 
 func TestFloorplansGetHandlerEmpty(t *testing.T) {
@@ -37,17 +30,8 @@ func TestFloorplansGetHandlerEmpty(t *testing.T) {
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/", nil)
 	response := apitest.ServeHTTP(request)
 
-	expected := `[{"id":1,"name":"floorplan1"}]`
-	result := response.Body.String()
-
-	if result != expected {
-		t.Errorf("Got %s, expected %s", result, expected)
-	}
-
-	statusCode := response.Result().StatusCode
-	if statusCode != http.StatusOK {
-		t.Errorf("the status code should be 200, got %d", statusCode)
-	}
+	assert.Equal(t, `[{"id":1,"name":"floorplan1"}]`, response.Body.String())
+	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
 }
 
 
@@ -60,17 +44,8 @@ func TestFloorplanGetHandler(t *testing.T) {
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/1", nil)
 	response := apitest.ServeHTTP(request)
 
-	expected := `{"id":1,"name":"floorplan1"}`
-	result := response.Body.String()
-
-	if result != expected {
-		t.Errorf("Got `%s`, expected `%s`", result, expected)
-	}
-
-	statusCode := response.Result().StatusCode
-	if statusCode != http.StatusOK {
-		t.Errorf("the status code should be 200, got %d", statusCode)
-	}
+	assert.Equal(t, `{"id":1,"name":"floorplan1"}`, response.Body.String())
+	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
 }
 
 func TestFloorplanGetHandlerNotFound(t *testing.T) {
@@ -80,14 +55,8 @@ func TestFloorplanGetHandlerNotFound(t *testing.T) {
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/1", nil)
 	response := apitest.ServeHTTP(request)
 
-	if response.Body.String() != "" {
-		t.Error("the response body should be empty")
-	}
-
-	statusCode := response.Result().StatusCode
-	if statusCode != http.StatusNotFound {
-		t.Errorf("the status code should be 404, got `%d`", statusCode)
-	}
+	assert.Equal(t, "", response.Body.String(), "the response body should be empty")
+	assert.Equal(t, response.Result().StatusCode, http.StatusNotFound)
 }
 
 func TestFloorplansPostHandler(t *testing.T) {
@@ -101,18 +70,8 @@ func TestFloorplansPostHandler(t *testing.T) {
 	)
 	response := apitest.ServeHTTP(request)
 
-	expected := `{"id":1,"name":"createdFloorplan"}`
-	result := response.Body.String()
-
-	if result != expected {
-		t.Errorf("Got `%s`, expected `%s`", result, expected)
-	}
-
-	statusCode := response.Result().StatusCode
-	if statusCode != http.StatusCreated {
-		t.Errorf("the status code should be 201, got `%d`", statusCode)
-	}
-
+	assert.Equal(t, `{"id":1,"name":"createdFloorplan"}`, response.Body.String())
+	assert.Equal(t, response.Result().StatusCode, http.StatusCreated)
 }
 
 func TestFloorplansPostHandlerBadInput(t *testing.T) {
@@ -126,13 +85,6 @@ func TestFloorplansPostHandlerBadInput(t *testing.T) {
 	)
 	response := apitest.ServeHTTP(request)
 
-	result := response.Body.String()
-	if result != "" {
-		t.Errorf("Got `%s`, expected empty body", result)
-	}
-
-	statusCode := response.Result().StatusCode
-	if statusCode != http.StatusBadRequest {
-		t.Errorf("the status code should be 400, got `%d`", statusCode)
-	}
+	assert.Equal(t, "", response.Body.String())
+	assert.Equal(t, response.Result().StatusCode, http.StatusBadRequest)
 }
