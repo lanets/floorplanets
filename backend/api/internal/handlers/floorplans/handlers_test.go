@@ -12,6 +12,26 @@ func TestFloorplansGetHandler(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
 	defer apitest.Close()
 
+	request, _ := http.NewRequest(http.MethodGet, "/floorplans/", nil)
+	response := apitest.ServeHTTP(request)
+
+	expected := `[]`
+	result := response.Body.String()
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+
+	statusCode := response.Result().StatusCode
+	if statusCode != http.StatusOK {
+		t.Errorf("the status code should be 200, got %d", statusCode)
+	}
+}
+
+func TestFloorplansGetHandlerEmpty(t *testing.T) {
+	apitest := api_test.NewApiTest(t)
+	defer apitest.Close()
+
 	apitest.App().CreateFloorplan("floorplan1")
 
 	request, _ := http.NewRequest(http.MethodGet, "/floorplans/", nil)
@@ -23,7 +43,13 @@ func TestFloorplansGetHandler(t *testing.T) {
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
+
+	statusCode := response.Result().StatusCode
+	if statusCode != http.StatusOK {
+		t.Errorf("the status code should be 200, got %d", statusCode)
+	}
 }
+
 
 func TestFloorplanGetHandler(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
