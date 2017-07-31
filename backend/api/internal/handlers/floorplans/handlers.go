@@ -35,7 +35,6 @@ func floorplansPostHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 
-		// Read the body
 		postedFloorplan := models.FloorplanFromJson(r.Body)
 
 		floorplan, err := app.CreateFloorplan(postedFloorplan.Name)
