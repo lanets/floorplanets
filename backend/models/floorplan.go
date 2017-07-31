@@ -17,7 +17,7 @@ type floorplanJson struct {
 	Name string `json:"name,omitempty"`
 }
 
-func (floorplan *Floorplan) ToFloorplanJson() floorplanJson {
+func (floorplan *Floorplan) toFloorplanJson() floorplanJson {
 	floorplanJson := floorplanJson{
 		ID:   floorplan.ID,
 		Name: floorplan.Name,
@@ -26,7 +26,7 @@ func (floorplan *Floorplan) ToFloorplanJson() floorplanJson {
 }
 
 func (floorplan *Floorplan) ToJson() string {
-	b, err := json.Marshal(floorplan.ToFloorplanJson())
+	b, err := json.Marshal(floorplan.toFloorplanJson())
 	if err != nil {
 		return ""
 	}
@@ -48,7 +48,7 @@ func FloorplanListToJson(floorplans []Floorplan) string {
 	floorplanJsons := make([]floorplanJson, 0)
 
 	for _, floorplan := range floorplans {
-		floorplanJsons = append(floorplanJsons, floorplan.ToFloorplanJson())
+		floorplanJsons = append(floorplanJsons, floorplan.toFloorplanJson())
 	}
 
 	b, err := json.Marshal(floorplanJsons)
