@@ -1,5 +1,5 @@
 // Package app is reponsible for executing the application's actions.
-// It dosen't know anything about http.
+// It dosen't know anything about http, but it knows about the database.
 package app
 
 import (
@@ -7,12 +7,12 @@ import (
 )
 
 type App struct {
-	database *gorm.DB
+	Database *gorm.DB
 }
 
 func NewApp(database *gorm.DB) *App {
 	app := App{
-		database: database,
+		Database: database,
 	}
 	return &app
 }

@@ -17,7 +17,7 @@ import (
 
 type ApiTest struct {
 	router       *mux.Router
-	app          *app.App
+	App          *app.App
 	databaseFile string
 	t            *testing.T
 }
@@ -37,7 +37,7 @@ func NewApiTest(t *testing.T) *ApiTest {
 	apiTest := ApiTest{
 		router:       api.NewRouter(application),
 		databaseFile: databaseFile,
-		app:          application,
+		App:          application,
 	}
 
 	return &apiTest

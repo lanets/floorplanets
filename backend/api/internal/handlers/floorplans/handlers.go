@@ -9,13 +9,21 @@ import (
 
 	"github.com/lanets/floorplanets/backend/api/internal/handlers/decorators"
 	"github.com/lanets/floorplanets/backend/app"
+	"github.com/lanets/floorplanets/backend/models"
 )
 
 func floorplansGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		// Bogus response for now :)
-		fmt.Fprint(w, "[]")
+
+		floorplans, err := app.GetAllFloorplansNameId()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		fmt.Fprint(w, models.FloorplanListToJson(floorplans))
+
 	}
 
 	handler = decorators.JsonHeaders(handler)
@@ -26,8 +34,17 @@ func floorplansGetHandler(app *app.App) http.Handler {
 func floorplansPostHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
+		name := r.FormValue("name")
+
+		err := app.CreateFloorplan(name)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
 		w.WriteHeader(http.StatusCreated)
+
 	}
 
 	handler = decorators.JsonHeaders(handler)
@@ -41,14 +58,19 @@ func floorplanGetHandler(app *app.App) http.Handler {
 		vars := mux.Vars(r)
 		id, _ := strconv.Atoi(vars["id"])
 
-		// For now, hardcode only one floorplan
-		if id != 1 {
-			http.NotFound(w, r)
+		floorplan, err := app.GetFloorplan(id)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		// :)
-		fmt.Fprint(w, `{ "0": { name: "A-1", x: 957, y: 171, label: "A-1" } }`)
+		if floorplan == nil {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		fmt.Fprint(w, floorplan.ToJson())
+
 	}
 
 	handler = decorators.JsonHeaders(handler)
