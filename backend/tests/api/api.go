@@ -21,7 +21,6 @@ type ApiTest struct {
 func NewApiTest(t *testing.T) *ApiTest {
 	testApp := test_app.NewTestApp(t)
 
-	// Create the ApiTest
 	apiTest := ApiTest{
 		router:  api.NewRouter(testApp.App),
 		testApp: testApp,
@@ -41,6 +40,6 @@ func (apiTest *ApiTest) Close() {
 	apiTest.testApp.Close()
 }
 
-func (apiTest *ApiTest) App() *app.App{
+func (apiTest *ApiTest) App() *app.App {
 	return apiTest.testApp.App
 }
