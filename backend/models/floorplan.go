@@ -12,7 +12,7 @@ type Floorplan struct {
 	Name string
 }
 
-// floorplanJson is used to serialize a Floorplan
+// floorplanJson is used to serialize and deserialize Floorplan
 type floorplanJson struct {
 	ID   uint   `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
