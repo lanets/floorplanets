@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-    "github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
 
 	api_test "github.com/lanets/floorplanets/backend/tests/api"
 )
@@ -33,7 +33,6 @@ func TestFloorplansGetHandlerEmpty(t *testing.T) {
 	assert.Equal(t, `[{"id":1,"name":"floorplan1"}]`, response.Body.String())
 	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
 }
-
 
 func TestFloorplanGetHandler(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
