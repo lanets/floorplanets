@@ -18,7 +18,7 @@ func TestFloorplansGetHandlerEmpty(t *testing.T) {
 	response := apitest.ServeHTTP(request)
 
 	assert.Equal(t, "[]", response.Body.String())
-	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
+	assert.Equal(t, http.StatusOK, response.Result().StatusCode)
 }
 
 func TestFloorplansGetHandler(t *testing.T) {
@@ -31,7 +31,7 @@ func TestFloorplansGetHandler(t *testing.T) {
 	response := apitest.ServeHTTP(request)
 
 	assert.Equal(t, `[{"id":1,"name":"floorplan1"}]`, response.Body.String())
-	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
+	assert.Equal(t, http.StatusOK, response.Result().StatusCode)
 }
 
 func TestFloorplanGetHandler(t *testing.T) {
@@ -44,7 +44,7 @@ func TestFloorplanGetHandler(t *testing.T) {
 	response := apitest.ServeHTTP(request)
 
 	assert.Equal(t, `{"id":1,"name":"floorplan1"}`, response.Body.String())
-	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
+	assert.Equal(t, http.StatusOK, response.Result().StatusCode)
 }
 
 func TestFloorplanGetHandlerNotFound(t *testing.T) {
@@ -55,7 +55,7 @@ func TestFloorplanGetHandlerNotFound(t *testing.T) {
 	response := apitest.ServeHTTP(request)
 
 	assert.Equal(t, "", response.Body.String(), "the response body should be empty")
-	assert.Equal(t, response.Result().StatusCode, http.StatusNotFound)
+	assert.Equal(t, http.StatusNotFound, response.Result().StatusCode)
 }
 
 func TestFloorplansPostHandler(t *testing.T) {
@@ -70,7 +70,7 @@ func TestFloorplansPostHandler(t *testing.T) {
 	response := apitest.ServeHTTP(request)
 
 	assert.Equal(t, `{"id":1,"name":"createdFloorplan"}`, response.Body.String())
-	assert.Equal(t, response.Result().StatusCode, http.StatusCreated)
+	assert.Equal(t, http.StatusCreated, response.Result().StatusCode)
 }
 
 func TestFloorplansPostHandlerBadInput(t *testing.T) {
@@ -85,5 +85,5 @@ func TestFloorplansPostHandlerBadInput(t *testing.T) {
 	response := apitest.ServeHTTP(request)
 
 	assert.Equal(t, "", response.Body.String())
-	assert.Equal(t, response.Result().StatusCode, http.StatusBadRequest)
+	assert.Equal(t, http.StatusBadRequest, response.Result().StatusCode)
 }
