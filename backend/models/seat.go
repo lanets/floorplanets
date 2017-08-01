@@ -18,8 +18,8 @@ type Seat struct {
 type seatJson struct {
 	ID    uint   `json:"id,omitempty"`
 	Label string `json:"label,omitempty"`
-	X     int    `json:"label,omitempty"`
-	Y     int    `json:"label,omitempty"`
+	X     int    `json:"x,omitempty"`
+	Y     int    `json:"y,omitempty"`
 }
 
 func (seat *Seat) toSeatJson() seatJson {
@@ -48,4 +48,19 @@ func SeatFromJson(data io.Reader) (*seatJson, error) {
 		return nil, err
 	}
 	return &s, err
+}
+
+func SeatListtoJson(seats []Seat) string {
+	seatJsons := make([]seatJson, 0)
+
+	for _, seat := range seats {
+		seatJsons = append(seatJsons, seat.toSeatJson())
+	}
+
+	b, err := json.Marshal(seatJsons)
+	if err != nil {
+		return ""
+	}
+
+	return string(b)
 }

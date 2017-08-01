@@ -17,6 +17,6 @@ func RegisterRoutes(app *app.App, r *mux.Router) {
 	//Register routes for: /seats
 	seats_handlers.RegisterRoutes(
 		app,
-		r.PathPrefix("/seats").Subrouter(),
+		r.PathPrefix("/{floorplan:[0-9]}/seats").Subrouter(),
 	)
 }

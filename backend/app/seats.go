@@ -39,3 +39,7 @@ func (app *App) GetSeat(id int) (*models.Seat, error) {
 	}
 	return &seat, app.Database.Error
 }
+
+func (app *App) LoadFloorplanSeats(floorplan *models.Floorplan) error {
+	return app.Database.Model(floorplan).Related(&floorplan.Seats).Error
+}

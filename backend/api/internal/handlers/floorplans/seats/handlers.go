@@ -15,14 +15,30 @@ import (
 func seatsGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
+		// TODO: refactor this into a decorator
+		vars := mux.Vars(r)
+		id, _ := strconv.Atoi(vars["floorplan"])
 
-		floorplans, err := app.GetAllFloorplansNameId()
+		floorplan, err := app.GetFloorplan(id)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		fmt.Fprint(w, models.FloorplanListToJson(floorplans))
+		if floorplan == nil {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+		// ENDS HERE
+
+		err = app.LoadFloorplanSeats(floorplan)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		fmt.Fprint(w, models.SeatListtoJson(floorplan.Seats))
 
 	}
 

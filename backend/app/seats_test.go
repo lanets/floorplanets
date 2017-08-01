@@ -44,3 +44,23 @@ func TestCreateSeat(t *testing.T) {
 	assert.Equal(t, 2, seat.X)
 	assert.Equal(t, 3, seat.Y)
 }
+
+
+func TestLoadSeats(t *testing.T) {
+	testApp := app.NewTestApp(t)
+	defer testApp.Close()
+
+	floorplan, err := testApp.App.CreateFloorplan("floorplan1")
+	assert.Nil(t, err)
+
+	err = testApp.App.LoadFloorplanSeats(floorplan)
+	assert.Nil(t, err)
+	assert.Equal(t, 0, len(floorplan.Seats))
+
+	_, err = testApp.App.CreateSeat(floorplan.ID, "A-1", 2, 3)
+	assert.Nil(t, err)
+
+	err = testApp.App.LoadFloorplanSeats(floorplan)
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(floorplan.Seats))
+}
