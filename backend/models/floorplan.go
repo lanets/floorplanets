@@ -30,7 +30,6 @@ func (floorplan *Floorplan) ToJson() string {
 	if err != nil {
 		return ""
 	}
-
 	return string(b)
 }
 
