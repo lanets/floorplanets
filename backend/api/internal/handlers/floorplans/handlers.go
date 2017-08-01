@@ -63,7 +63,7 @@ func floorplanGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		id, _ := strconv.Atoi(vars["id"])
+		id, _ := strconv.Atoi(vars["floorplan"])
 
 		floorplan, err := app.GetFloorplan(id)
 		if err != nil {
