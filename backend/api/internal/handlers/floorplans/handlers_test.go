@@ -10,7 +10,7 @@ import (
 	api_test "github.com/lanets/floorplanets/backend/tests/api"
 )
 
-func TestFloorplansGetHandler(t *testing.T) {
+func TestFloorplansGetHandlerEmpty(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
 	defer apitest.Close()
 
@@ -21,7 +21,7 @@ func TestFloorplansGetHandler(t *testing.T) {
 	assert.Equal(t, response.Result().StatusCode, http.StatusOK)
 }
 
-func TestFloorplansGetHandlerEmpty(t *testing.T) {
+func TestFloorplansGetHandler(t *testing.T) {
 	apitest := api_test.NewApiTest(t)
 	defer apitest.Close()
 
