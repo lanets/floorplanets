@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/lanets/floorplanets/backend/api/handlers/decorators"
+	"github.com/lanets/floorplanets/backend/api/internal/handlers/decorators"
 )
 
 func TestJsonHeaders(t *testing.T) {

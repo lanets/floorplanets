@@ -9,7 +9,9 @@ import (
 )
 
 func TestIndexHandler(t *testing.T) {
-	apitest := api_test.NewApiTest()
+	apitest := api_test.NewApiTest(t)
+	defer apitest.Close()
+
 	req, _ := http.NewRequest(http.MethodGet, "/lanets/", nil)
 	res := apitest.ServeHTTP(req)
 
@@ -19,7 +21,9 @@ func TestIndexHandler(t *testing.T) {
 }
 
 func TextIndexHandlerPost(t *testing.T) {
-	apitest := api_test.NewApiTest()
+	apitest := api_test.NewApiTest(t)
+	defer apitest.Close()
+
 	req, _ := http.NewRequest(http.MethodPost, "/lanets/", nil)
 	res := apitest.ServeHTTP(req)
 
