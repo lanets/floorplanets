@@ -45,7 +45,6 @@ func TestCreateSeat(t *testing.T) {
 	assert.Equal(t, 3, seat.Y)
 }
 
-
 func TestLoadSeats(t *testing.T) {
 	testApp := app.NewTestApp(t)
 	defer testApp.Close()
