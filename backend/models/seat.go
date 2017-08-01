@@ -9,9 +9,10 @@ import (
 
 type Seat struct {
 	gorm.Model
-	Label string
-	X     int
-	Y     int
+	FloorplanID uint
+	Label       string
+	X           int
+	Y           int
 }
 
 type seatJson struct {
