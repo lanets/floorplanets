@@ -1,3 +1,4 @@
+// Package http is responsible for creating an HTTP server
 package http
 
 import (

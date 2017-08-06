@@ -1,3 +1,4 @@
+// Package app provides testing facilities for the app package
 package app
 
 import (
@@ -19,6 +20,7 @@ type TestApp struct {
 	App     *app.App
 }
 
+// NewTestApp creates a TestApp with using a database in a temporary directory
 func NewTestApp(t *testing.T) *TestApp {
 	tempDir, err := ioutil.TempDir("", "floorplanets-tests")
 	if err != nil {

@@ -1,3 +1,4 @@
+// Package models contains the models for floorplanets
 package models
 
 import (
