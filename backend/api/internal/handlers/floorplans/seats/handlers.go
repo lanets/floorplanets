@@ -66,23 +66,24 @@ func seatGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		id, _ := strconv.Atoi(vars["id"])
+		id, _ := strconv.Atoi(vars["seat"])
 
-		floorplan, err := app.GetFloorplan(id)
+		seat, err := app.GetSeat(id)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		if floorplan == nil {
+		if seat == nil {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 
-		fmt.Fprint(w, floorplan.ToJson())
+		fmt.Fprint(w, seat.ToJson())
 
 	}
 
+	handler = decorators.FloorplanContext(app, handler)
 	handler = decorators.JsonHeaders(handler)
 
 	return http.HandlerFunc(handler)
