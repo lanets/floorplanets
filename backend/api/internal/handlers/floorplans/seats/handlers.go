@@ -37,14 +37,20 @@ func seatsGetHandler(app *app.App) http.Handler {
 func seatsPostHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
+		floorplan := decorators.FloorplanFromContext(r.Context())
 
-		postedFloorplan, err := models.FloorplanFromJson(r.Body)
+		postedSeat, err := models.SeatFromJson(r.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		floorplan, err := app.CreateFloorplan(postedFloorplan.Name)
+		seat, err := app.CreateSeat(
+			floorplan.ID,
+			postedSeat.Label,
+			postedSeat.X,
+			postedSeat.Y,
+		)
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -53,10 +59,11 @@ func seatsPostHandler(app *app.App) http.Handler {
 
 		w.WriteHeader(http.StatusCreated)
 
-		fmt.Fprint(w, floorplan.ToJson())
+		fmt.Fprint(w, seat.ToJson())
 
 	}
 
+	handler = decorators.FloorplanContext(app, handler)
 	handler = decorators.JsonHeaders(handler)
 
 	return http.HandlerFunc(handler)

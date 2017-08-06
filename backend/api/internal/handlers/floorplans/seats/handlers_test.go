@@ -2,6 +2,7 @@ package seats_test
 
 import (
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -83,4 +84,22 @@ func TestSeatGetHandlerFloorplanNotFound(t *testing.T) {
 
 	assert.Equal(t, "", response.Body.String())
 	assert.Equal(t, http.StatusNotFound, response.Result().StatusCode)
+}
+
+func TestSeatsPostHandler(t *testing.T) {
+	apitest := api_test.NewApiTest(t)
+	defer apitest.Close()
+
+	_, err := apitest.App().CreateFloorplan("floorplan1")
+	assert.Nil(t, err)
+
+	request, _ := http.NewRequest(
+		http.MethodPost,
+		"/floorplans/1/seats",
+		strings.NewReader(`{"label":"A-1","x":2,"y":3}`),
+	)
+	response := apitest.ServeHTTP(request)
+
+	assert.Equal(t, `{"id":1,"label":"A-1","x":2,"y":3}`, response.Body.String())
+	assert.Equal(t, http.StatusCreated, response.Result().StatusCode)
 }
