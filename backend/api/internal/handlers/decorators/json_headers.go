@@ -4,7 +4,6 @@ import (
 	"net/http"
 )
 
-
 // JsonHeaders adds the Content-Type application/json header to the request.
 // It adds the header before running the handler. Otherwise, it would be too
 // late to add headers.

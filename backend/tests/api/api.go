@@ -13,7 +13,6 @@ import (
 	test_app "github.com/lanets/floorplanets/backend/tests/app"
 )
 
-
 // ApiTest simulates an http API
 type ApiTest struct {
 	router  *mux.Router
