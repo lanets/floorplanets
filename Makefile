@@ -82,9 +82,13 @@ floorplanets: .golang-build-image $(FLOORPLANETS_SOURCES) vendor
 gofmt: .golang-build-image
 	$(docker_run_go) bash -c 'go fmt $$(go list ./... | grep -v "/vendor/")'
 
+.PHONY: gotest-race
+gotest-race: FLOORPLANETS_GOTEST_ARGS=-race
+gotest-race: gotest
+
 .PHONY: gotest
 gotest: .golang-build-image vendor
-	$(docker_run_go) bash -c 'go install -v $$(go list ./... | grep -v "/vendor/") && go test -v $$(go list ./... | grep -v "/vendor/")'
+	$(docker_run_go) bash -c 'go install -v $$(go list ./... | grep -v "/vendor/") && go test $(FLOORPLANETS_GOTEST_ARGS) -v $$(go list ./... | grep -v "/vendor/")'
 
 
 #####################
@@ -92,7 +96,7 @@ gotest: .golang-build-image vendor
 #####################
 
 .PHONY: test
-test: gotest nodetest-CI
+test: gotest-race nodetest-CI
 
 .PHONY: clean
 clean:
