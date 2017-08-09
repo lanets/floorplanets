@@ -3,9 +3,6 @@ package floorplans
 import (
 	"fmt"
 	"net/http"
-	"strconv"
-
-	"github.com/gorilla/mux"
 
 	"github.com/lanets/floorplanets/backend/api/internal/handlers/decorators"
 	"github.com/lanets/floorplanets/backend/app"
@@ -62,24 +59,12 @@ func floorplansPostHandler(app *app.App) http.Handler {
 func floorplanGetHandler(app *app.App) http.Handler {
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		id, _ := strconv.Atoi(vars["floorplan"])
-
-		floorplan, err := app.GetFloorplan(id)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		if floorplan == nil {
-			w.WriteHeader(http.StatusNotFound)
-			return
-		}
-
+		floorplan := decorators.FloorplanFromContext(r.Context())
 		fmt.Fprint(w, floorplan.ToJson())
 
 	}
 
+	handler = decorators.FloorplanContext(app, handler)
 	handler = decorators.JsonHeaders(handler)
 
 	return http.HandlerFunc(handler)

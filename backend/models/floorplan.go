@@ -10,7 +10,8 @@ import (
 
 type Floorplan struct {
 	gorm.Model
-	Name string
+	Name  string
+	Seats []Seat
 }
 
 type floorplanJson struct {
