@@ -100,13 +100,13 @@ test: gotest-race nodetest-CI
 
 .PHONY: clean
 clean:
-	rm -rf node_modules
-	rm -f npm-debug.log
+	rm -rf frontend/node_modules
+	rm -rf frontend/flow-typed
+	rm -rf frontend/build
+	rm -f frontend/npm-debug.log
 	rm -f floorplanets
 	rm -f .node-build-image
 	rm -f .golang-build-image
-	rm -rf flow-typed
-	rm -rf build
 	rm -rf vendor
 	rm -rf database.sqlite
 	rm -rf .pkg
