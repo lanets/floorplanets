@@ -9,7 +9,7 @@ ifeq ($(FLOORPLANETS_PORT),)
     export FLOORPLANETS_PORT = 8080
 endif
 
-docker_run_node = docker run --rm -t -i -v $$(pwd):/opt/floorplan -w /opt/floorplan -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER)
+docker_run_node = docker run --rm -t -i -v $$(pwd)/frontend:/opt/floorplan -w /opt/floorplan -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER)
 docker_run_go = docker run --rm -t -v $$(pwd)/.pkg:/go/pkg -v $$(pwd):/go/src/github.com/lanets/floorplanets -w /go/src/github.com/lanets/floorplanets -u $(FLOORPLANETS_USER):$(FLOORPLANETS_USER) floorplan-golang
 
 #######################
