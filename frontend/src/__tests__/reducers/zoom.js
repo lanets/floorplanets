@@ -1,5 +1,5 @@
-import reducer, { initial } from '../../src/reducers/zoom';
-import { zoomIn, zoomOut } from '../../src/actions/zoom';
+import reducer, { initial } from '../../reducers/zoom';
+import { zoomIn, zoomOut } from '../../actions/zoom';
 
 
 describe('reducer handles ZOOM_IN action', () => {

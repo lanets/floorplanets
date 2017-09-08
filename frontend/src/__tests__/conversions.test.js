@@ -1,4 +1,4 @@
-import { toSeatData } from '../src/conversions';
+import { toSeatData } from '../conversions';
 
 describe('when using toSeatData conversion function', () => {
   let seatState, converted;

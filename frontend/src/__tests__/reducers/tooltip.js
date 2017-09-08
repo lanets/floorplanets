@@ -1,5 +1,5 @@
-import reducer, { initial } from '../../src/reducers/tooltip';
-import { showTooltip, hideTooltip } from '../../src/actions/tooltip';
+import reducer, { initial } from '../../reducers/tooltip';
+import { showTooltip, hideTooltip } from '../../actions/tooltip';
 
 
 describe('reducer handles SHOW_TOOLTIP action', () => {

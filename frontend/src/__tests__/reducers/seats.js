@@ -1,8 +1,8 @@
-import reducer from '../../src/reducers/seats';
-import { loadSeats } from '../../src/actions/seats';
-import { seatsData } from '../../src/__mock__/seats';
+import reducer from '../../reducers/seats';
+import { loadSeats } from '../../actions/seats';
+import { seatsData } from '../../__mock__/seats';
 
-import { initial } from '../../src/reducers/seats';
+import { initial } from '../../reducers/seats';
 
 describe('reducer handles LOAD_SEATS action', () => {
   it('It loads the seats contained in the action payload', () => {
